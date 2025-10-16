@@ -1,4 +1,5 @@
-﻿using HurricaneVR.Framework.Components;
+﻿using System.Collections.Generic;
+using HurricaneVR.Framework.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,14 +10,14 @@ namespace HurricaneVR.TechDemo.Scripts
     {
         public UnityEvent Unlocked = new UnityEvent();
 
-        public string Code;
+        public List<string> Codes;
         public TextMeshPro Display;
         public string Entry = "";
         public bool ForceUnlock;
 
         public int Index => Entry?.Length ?? 0;
 
-        public int MaxLength => Code?.Length ?? 0;
+        public int MaxLength => Codes[0]?.Length ?? 0;
 
         private bool _unlocked;
 
@@ -90,9 +91,12 @@ namespace HurricaneVR.TechDemo.Scripts
             }
             else if (keyPadButton.Key == '+')
             {
-                if (Code == Entry)
+                foreach (var code in Codes)
                 {
-                    Unlock();
+                    if (code == Entry)
+                    {
+                        Unlock();
+                    }
                 }
             }
             else if (Index >= 0 && Index < MaxLength)

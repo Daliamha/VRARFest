@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PickAndMatch.Scripts.Events
+namespace VRFest.Scripts.Utils
 {
     public static class EventBus
     {

@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IgnoreCollisions : MonoBehaviour
+namespace VRFest.Scripts.Utils
 {
-    [SerializeField] private Collider _currentCollider;
-    [Space]
-    [SerializeField] private List<Collider> _objectsToIgnore;
-
-    private void Start()
+    public class IgnoreCollisions : MonoBehaviour
     {
-        foreach (var collider in _objectsToIgnore) {
-            Physics.IgnoreCollision(_currentCollider, collider);
+        [SerializeField] private Collider _currentCollider;
+        [Space] [SerializeField] private List<Collider> _objectsToIgnore;
+
+        private void Start()
+        {
+            foreach (var collider in _objectsToIgnore)
+            {
+                Physics.IgnoreCollision(_currentCollider, collider);
+            }
         }
     }
 }
