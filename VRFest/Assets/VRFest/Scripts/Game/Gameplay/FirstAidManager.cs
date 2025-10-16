@@ -36,7 +36,7 @@ namespace VRFest.Scripts.Game.Gameplay
             var time = 0f;
             while (true)
             {
-                _time.text = TimeSpan.FromDays(time++).ToString(@"hh\:mm\:ss");
+                _time.text = TimeSpan.FromSeconds(time++).ToString(@"hh\:mm\:ss");
                 yield return new WaitForSeconds(1f);
             }
         }

@@ -28,6 +28,7 @@ namespace VRFest.Scripts.Game.Root
         {
             _coroutines = new GameObject("[COROUTINES]").AddComponent<Coroutines>();
             Object.DontDestroyOnLoad(_coroutines.gameObject);
+            _rootContainer.RegisterInstance(_coroutines);
         }
         
         private void StartGame()
@@ -37,7 +38,7 @@ namespace VRFest.Scripts.Game.Root
             
                         if (sceneName == Scenes.GAMEPLAY)
                         {
-                            var gameplayEnterParams = new GameplayEnterParams("burn", true);
+                            var gameplayEnterParams = new GameplayEnterParams("burn", false);
                             _coroutines.StartCoroutine(LoadAndStartGame(gameplayEnterParams));
                             return;
                         }

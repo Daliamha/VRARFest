@@ -51,6 +51,7 @@ namespace VRFest.Scripts.Game.Gameplay
                 else
                 {
                     _coroutines.StartCoroutine(_firstAidView.StartTime());
+                    break;
                 }
             }
         }
