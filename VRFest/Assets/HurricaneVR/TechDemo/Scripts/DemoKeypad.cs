@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HurricaneVR.Framework.Components;
+using HurricaneVR.Framework.Core.Utils;
 using TMPro;
 using UnityEngine;
 using VRFest.Scripts.Game.Gameplay;
@@ -8,7 +9,7 @@ namespace HurricaneVR.TechDemo.Scripts
 {
     public class DemoKeypad : Manager
     {
-
+        public AudioClip audio;
         public List<string> Codes;
         public TextMeshPro Display;
         public string Entry = "";
@@ -117,6 +118,7 @@ namespace HurricaneVR.TechDemo.Scripts
 
         protected virtual void Unlock()
         {
+            SFXPlayer.Instance.PlaySFX(audio, transform.position);
             _service.NextMoveFirstAid();
             Debug.Log($"Correct!");
             Destroy(this);

@@ -69,7 +69,7 @@ public class Stream : MonoBehaviour
         RaycastHit hit;
         Ray ray = new Ray(transform.position, Vector3.down);
         
-        Physics.Raycast(ray, out hit, 200f);
+        Physics.Raycast(ray, out hit, 200f, LayerMask.GetMask("Floor"));
         Vector3 endPoint = hit.collider ? hit.point : ray.GetPoint(200f);
         
         return endPoint;

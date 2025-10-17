@@ -36,23 +36,27 @@ namespace VRFest.Scripts.Game.Gameplay
                 else
                 {
                     _firstAidView.PlayHintSound(index);
+                    _firstAidView.EnableOutlineHint(index);
                 }
                 
-                _firstAidView.EnableOutlineHint(index);
                 _firstAidView.EnableManager(index);
                 yield return WaitUntilNextMove();
 
                 if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
                     index = 1;
-                    for (int i = 0; i < 3; i++)
+                    _firstAidView.StartBurn();
+                    for (int i = 0; i < 2; i++)
                     {
-                        _firstAidView.EnableOutlineHint(index);
+                        Debug.Log(index);
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
                         {
+                            _firstAidView.EnableOutlineHint(index);
                             _firstAidView.PlayHintSound(index);
                         }
+
+                        index += 1;
                         yield return WaitUntilNextMove();
                     }
 
@@ -62,13 +66,14 @@ namespace VRFest.Scripts.Game.Gameplay
                     index = 3;
                     for (int i = 0; i < 3; i++)
                     {
-                        _firstAidView.EnableOutlineHint(index);
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
                         {
+                            _firstAidView.EnableOutlineHint(index);
                             _firstAidView.PlayHintSound(index);
                         }
 
+                        index += 1;
                         yield return WaitUntilNextMove();
                     }
                 }
@@ -77,13 +82,14 @@ namespace VRFest.Scripts.Game.Gameplay
                     index = 6;
                     for (int i = 0; i < 3; i++)
                     {
-                        _firstAidView.EnableOutlineHint(index);
+                    if (i == 1) { _firstAidView.ShowTryStandUpAnimation(); }
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
                         {
+                            _firstAidView.EnableOutlineHint(index);
                             _firstAidView.PlayHintSound(index);
                         }
-
+                        index += 1;
                         yield return WaitUntilNextMove();
                     }
                 }

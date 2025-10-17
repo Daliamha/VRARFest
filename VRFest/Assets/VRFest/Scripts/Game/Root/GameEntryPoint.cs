@@ -38,13 +38,13 @@ namespace VRFest.Scripts.Game.Root
             
                         if (sceneName == Scenes.GAMEPLAY)
                         {
-                            var gameplayEnterParams = new GameplayEnterParams("Burn", false);
+                            var gameplayEnterParams = new GameplayEnterParams("Burn", true);
                             _coroutines.StartCoroutine(LoadAndStartGame(gameplayEnterParams));
                             return;
                         }
             #endif
             
-            //_coroutines.StartCoroutine(LoadAndStartMainMenu());
+            _coroutines.StartCoroutine(LoadAndStartMainMenu());
         }
 
         private IEnumerator LoadAndStartGame(GameplayEnterParams enterParams)
@@ -73,10 +73,10 @@ namespace VRFest.Scripts.Game.Root
             yield return LoadScene(Scenes.MAIN_MENU);
             
             yield return null;
-            
+            Debug.Log(1);
             var sceneEntryPoint = Object.FindFirstObjectByType<MainMenuEntryPoint>();
             var mainMenuContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
-
+            Debug.Log(1);
             sceneEntryPoint.Run(mainMenuContainer, enterParams).Subscribe(mainMenuExitParams =>
             {
                 _coroutines.StartCoroutine(LoadAndStartGame(mainMenuExitParams));

@@ -1065,7 +1065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3924027509722682573, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3924027509722682573, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3708,7 +3708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &185799456
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7482,13 +7482,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386080012}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.6861539, y: -0, z: -0, w: 0.72745645}
+  m_LocalPosition: {x: -0.0518, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 859120329}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 86.653, y: 0, z: 0}
 --- !u!114 &386080014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7550,9 +7550,9 @@ MonoBehaviour:
   RightAutoPose: 0
   SelectionIndex: 0
   PoseNames:
-  - Primary Not Set
+  - 'Primary: Bint'
   PrimaryPose:
-    Pose: {fileID: 0}
+    Pose: {fileID: 11400000, guid: 3486d00e33d1f504e8f1c78e104c84d7, type: 2}
     Weight: 1
     Mask: 0
     Type: 0
@@ -7572,7 +7572,7 @@ MonoBehaviour:
     RingStart: 0
     PinkyStart: 0
   Blends: []
-  MirrorAxis: 0
+  MirrorAxis: 2
 --- !u!1 &386696075
 GameObject:
   m_ObjectHideFlags: 0
@@ -9955,7 +9955,7 @@ Transform:
   m_GameObject: {fileID: 520485916}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23362115, y: 0.3641554, z: 0.75882745, w: 0.48681924}
-  m_LocalPosition: {x: -0.015320241, y: -0.0129419565, z: 0.010927376}
+  m_LocalPosition: {x: 0.0002, y: -0.0008, z: 0.0152}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10022,9 +10022,9 @@ MonoBehaviour:
   RightAutoPose: 0
   SelectionIndex: 0
   PoseNames:
-  - 'Primary: ZelenkaPose'
+  - 'Primary: JopaJopaJopaJopaJopaJopapose'
   PrimaryPose:
-    Pose: {fileID: 11400000, guid: a4719b10935599c4194a56f4865f6949, type: 2}
+    Pose: {fileID: 11400000, guid: 31025aaa3adba01469b8289aa5fb6b26, type: 2}
     Weight: 1
     Mask: 0
     Type: 0
@@ -10044,7 +10044,7 @@ MonoBehaviour:
     RingStart: 0
     PinkyStart: 0
   Blends: []
-  MirrorAxis: 0
+  MirrorAxis: 2
 --- !u!21 &529680015
 Material:
   serializedVersion: 8
@@ -11972,7 +11972,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1939211654}
+    m_TransformParent: {fileID: 1233730930272986005}
     m_Modifications:
     - target: {fileID: 500154599, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_IsActive
@@ -12136,43 +12136,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalScale.x
-      value: 20
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalScale.y
-      value: 20
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalScale.z
-      value: 20
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.37
+      value: 0.63651705
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.11
+      value: -0.91204906
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.76
+      value: -0.5982914
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7641274
+      value: 0.101926334
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.30524513
+      value: -0.8691378
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.09518903
+      value: -0.0022370995
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.56024444
+      value: 0.48394787
       objectReference: {fileID: 0}
     - target: {fileID: 8694592658303115209, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -13418,6 +13418,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 87554b5ed79f037448732ede8f9d6bec, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 87554b5ed79f037448732ede8f9d6bec, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -4683669308469848369, guid: 87554b5ed79f037448732ede8f9d6bec, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -15634,6 +15638,7 @@ MonoBehaviour:
   - {fileID: 1036940573}
   _time: {fileID: 1391461026}
   _humanAnimator: {fileID: 5866666020774422844}
+  _burnGameObject: {fileID: 1939211653}
 --- !u!4 &896386171
 Transform:
   m_ObjectHideFlags: 0
@@ -16786,6 +16791,8 @@ MonoBehaviour:
   - {fileID: 979900473}
   - {fileID: 1225990497}
   - {fileID: 8855545312574547272}
+  - {fileID: 29369478}
+  - {fileID: 1036940573}
 --- !u!4 &966558350
 Transform:
   m_ObjectHideFlags: 0
@@ -18193,6 +18200,10 @@ PrefabInstance:
       value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 4197260137012514238, guid: 200eacf493e6035489739096ccaa292e, type: 3}
+      propertyPath: audio
+      value: 
+      objectReference: {fileID: 8300000, guid: c47bfd29290f95047a1f81489993fc68, type: 3}
+    - target: {fileID: 4197260137012514238, guid: 200eacf493e6035489739096ccaa292e, type: 3}
       propertyPath: Codes.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -18365,7 +18376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 1
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
@@ -19295,7 +19306,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 93c79bd4b8a52e24aa0cd72ad584daf9, type: 3}
+  - {fileID: 2100000, guid: 0f8aaafa33bbf384a854faeee38f5299, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21568,7 +21579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
@@ -30362,7 +30373,7 @@ MonoBehaviour:
   LeftHand: 1
   RightHand: 0
   Group: -1
-  HandRotationOffset: {x: -25, y: 0, z: 0}
+  HandRotationOffset: {x: 0, y: 0, z: 0}
   HandPositionOffset: {x: 0, y: 0, z: 0}
   GrabIndicatorPosition: {fileID: 0}
   VisualGrabPoint: {fileID: 0}
@@ -33301,12 +33312,12 @@ GameObject:
   - component: {fileID: 1939211656}
   - component: {fileID: 1939211655}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: BurnSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1939211654
 Transform:
   m_ObjectHideFlags: 0
@@ -33321,7 +33332,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1223490760}
-  - {fileID: 645807076}
   m_Father: {fileID: 1233730930272986005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1939211655
@@ -34726,7 +34736,7 @@ MonoBehaviour:
   LeftHand: 0
   RightHand: 1
   Group: -1
-  HandRotationOffset: {x: -25, y: 0, z: 0}
+  HandRotationOffset: {x: 0, y: 0, z: 0}
   HandPositionOffset: {x: 0, y: 0, z: 0}
   GrabIndicatorPosition: {fileID: 0}
   VisualGrabPoint: {fileID: 0}
@@ -38020,7 +38030,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 93c79bd4b8a52e24aa0cd72ad584daf9, type: 3}
+  - {fileID: 2100000, guid: 0f8aaafa33bbf384a854faeee38f5299, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -40304,6 +40314,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3311327716469754031}
+  - {fileID: 645807076}
   - {fileID: 1939211654}
   m_Father: {fileID: 2852466511737654868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52113,6 +52124,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 500154603, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
+      propertyPath: m_Radius
+      value: 0.12823768
+      objectReference: {fileID: 0}
+    - target: {fileID: 500154603, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
+      propertyPath: m_Center.x
+      value: 0.11823772
+      objectReference: {fileID: 0}
+    - target: {fileID: 500154603, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
+      propertyPath: m_Center.y
+      value: 0.00000009863685
+      objectReference: {fileID: 0}
+    - target: {fileID: 500154603, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
+      propertyPath: m_Center.z
+      value: 0.00000023692712
+      objectReference: {fileID: 0}
     - target: {fileID: 1571637294, guid: 55dd4e3cff92c2a4cbdc8bc3897fa0ae, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -55380,7 +55407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 1
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
@@ -56464,8 +56491,8 @@ GameObject:
   - component: {fileID: 6075672950171356632}
   - component: {fileID: 7205473319651820157}
   - component: {fileID: 4907248518780303031}
-  - component: {fileID: 7205473319651820160}
   - component: {fileID: 7205473319651820159}
+  - component: {fileID: 7205473319651820160}
   - component: {fileID: 7205473319651820158}
   m_Layer: 0
   m_Name: Zelenka
@@ -56736,7 +56763,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7205473319651820159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56854,8 +56881,8 @@ MonoBehaviour:
   HandGrabbers: []
   Stabbers: []
   Stabbable: {fileID: 0}
---- !u!65 &7205473319651820160
-BoxCollider:
+--- !u!64 &7205473319651820160
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -56872,9 +56899,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.023005905, y: 0.023005903, z: 0.04231312}
-  m_Center: {x: 0, y: 0, z: 0.02115656}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: c813cdf6998e771459bf9ac31e2f4408, type: 3}
 --- !u!4 &7247790526398811035
 Transform:
   m_ObjectHideFlags: 0
@@ -60006,7 +60034,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -63214,8 +63242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
@@ -63234,7 +63262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCollider: {fileID: 158866765}
   _otherCollider: {fileID: 8707273952198491538}
-  _time: 1
+  _time: 0
 --- !u!1 &8878029952554502865
 GameObject:
   m_ObjectHideFlags: 0
@@ -63501,7 +63529,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!23 &9058610811818488316
 MeshRenderer:
   m_ObjectHideFlags: 0

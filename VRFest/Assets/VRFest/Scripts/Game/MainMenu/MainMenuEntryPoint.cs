@@ -13,7 +13,8 @@ namespace VRFest.Scripts.Game.MainMenu
         public Observable<GameplayEnterParams> Run(DIContainer mainMenuContainer, MainMenuEnterParams enterParams)
         {
             var exitSignalSubj = new Subject<GameplayEnterParams>();
-            
+
+            Debug.Log(12313123123123);
             Bind(exitSignalSubj);
             return exitSignalSubj;
         }

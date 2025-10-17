@@ -14,6 +14,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<Manager> _managers;
         [SerializeField] private TextMeshProUGUI _time;
         [SerializeField] private Animator _humanAnimator;
+        [SerializeField] private GameObject _burnGameObject;
 
         private void Start()
         {
@@ -32,6 +33,11 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             _humanAnimator.SetTrigger("TryUp");
         }
+
+        public void StartBurn()
+        {
+            _burnGameObject.SetActive(true);
+        }
         
         public void PlayHintSound(int index)
         {
@@ -41,6 +47,7 @@ namespace VRFest.Scripts.Game.Gameplay
 
         public void EnableManager(int index)
         {
+            Debug.Log(index);
             _managers[index].enabled = true;
         }
         
