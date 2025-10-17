@@ -24,11 +24,13 @@ namespace VRFest.Scripts.Game.Gameplay
         public void PlayHintSound(int index)
         {
             _audioSource.PlayOneShot(_hintsSounds[index], 1);
+            Debug.Log("Worked sound");
         }
 
         public void EnableOutlineHint(int index)
         {
             _hintsObjects[index].enabled = true;
+            Debug.Log("Worked hint");
         }
 
         public IEnumerator StartTime()

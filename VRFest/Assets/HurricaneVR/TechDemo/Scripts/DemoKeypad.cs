@@ -115,7 +115,8 @@ namespace HurricaneVR.TechDemo.Scripts
             if (!_unlocked)
                 Unlocked.Invoke();
             _unlocked = true;
-            Debug.Log($"unlocked!");
+            Debug.Log($"Correct!");
+            Destroy(this);
         }
     }
 }
