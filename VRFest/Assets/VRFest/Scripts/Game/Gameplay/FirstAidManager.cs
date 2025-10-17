@@ -12,6 +12,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<AudioClip> _hintsSounds;
         [SerializeField] private List<Outline> _hintsObjects;
         [SerializeField] private TextMeshProUGUI _time;
+        [SerializeField] private Animator _humanAnimator;
 
         private void Start()
         {
@@ -21,6 +22,11 @@ namespace VRFest.Scripts.Game.Gameplay
             }
         }
 
+        public void ShowTryStandUpAnimation()
+        {
+            _humanAnimator.SetTrigger("TryUp");
+        }
+        
         public void PlayHintSound(int index)
         {
             _audioSource.PlayOneShot(_hintsSounds[index], 1);

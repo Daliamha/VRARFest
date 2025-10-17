@@ -29,7 +29,7 @@ namespace HurricaneVR.TechDemo.Scripts
             Socket.Grabbed.AddListener(OnKeyGrabbed);
         }
 
-        public void Update()
+        /*public void Update()
         {
             if (!_unlocked && FaceGrabbable.transform.localRotation.eulerAngles.x > LockThreshold)
             {
@@ -42,7 +42,7 @@ namespace HurricaneVR.TechDemo.Scripts
                 FaceGrabbable.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
                 if(SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(SFXUnlocked, FaceGrabbable.transform.position);
             }
-        }
+        }*/
     
         private void OnKeyGrabbed(HVRGrabberBase grabber, HVRGrabbable key)
         {
