@@ -29,29 +29,63 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             /*while (true)
             {*/
-                if (_gameplayEnterParams.isEducation)
+                if (!_gameplayEnterParams.isEducation)
                 {
                     _coroutines.StartCoroutine(_firstAidView.StartTime());
                 }
-
-                _firstAidView.PlayHintSound(index);
+                else
+                {
+                    _firstAidView.PlayHintSound(index);
+                }
+                
                 _firstAidView.EnableOutlineHint(index);
+                _firstAidView.EnableManager(index);
                 yield return WaitUntilNextMove();
 
                 if (_gameplayEnterParams.nameOfBad == "Burn")
                 {
                     index = 1;
-                    yield return WaitUntilNextMove();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        _firstAidView.EnableOutlineHint(index);
+                        _firstAidView.EnableManager(index);
+                        if (_gameplayEnterParams.isEducation)
+                        {
+                            _firstAidView.PlayHintSound(index);
+                        }
+                        yield return WaitUntilNextMove();
+                    }
+
                 }
                 else if (_gameplayEnterParams.nameOfBad == "Hypothermia")
                 {
                     index = 4;
-                    yield return WaitUntilNextMove();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        _firstAidView.EnableOutlineHint(index);
+                        _firstAidView.EnableManager(index);
+                        if (_gameplayEnterParams.isEducation)
+                        {
+                            _firstAidView.PlayHintSound(index);
+                        }
+
+                        yield return WaitUntilNextMove();
+                    }
                 }
                 else
                 {
                     index = 7;
-                    yield return WaitUntilNextMove();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        _firstAidView.EnableOutlineHint(index);
+                        _firstAidView.EnableManager(index);
+                        if (_gameplayEnterParams.isEducation)
+                        {
+                            _firstAidView.PlayHintSound(index);
+                        }
+
+                        yield return WaitUntilNextMove();
+                    }
                 }
             //}
         }

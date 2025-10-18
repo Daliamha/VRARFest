@@ -9,7 +9,7 @@ namespace VRFest.Scripts.Game.Gameplay
         private Coroutine _coroutine;
         private FirstAidService _service;
 
-        public void Init(FirstAidService service)
+        public override void Init(FirstAidService service)
         {
             _service = service;
         }

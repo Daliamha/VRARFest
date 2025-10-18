@@ -44,7 +44,7 @@ namespace VRFest.Scripts.Game.Root
                         }
             #endif
             
-            _coroutines.StartCoroutine(LoadAndStartMainMenu());
+            //_coroutines.StartCoroutine(LoadAndStartMainMenu());
         }
 
         private IEnumerator LoadAndStartGame(GameplayEnterParams enterParams)
