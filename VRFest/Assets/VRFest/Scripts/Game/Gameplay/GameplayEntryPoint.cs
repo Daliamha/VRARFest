@@ -1,4 +1,5 @@
 using BaCon;
+using HurricaneVR.TechDemo.Scripts;
 using UnityEngine;
 using R3;
 using VRFest.Scripts.Game.MainMenu;
@@ -15,6 +16,8 @@ namespace VRFest.Scripts.Game.Gameplay
         private DIContainer _gameplayContainer;
         private Subject<Unit> _exitSceneEvent;
         [SerializeField] private FirstAidView _firstAidView;
+        [SerializeField] private CardiopulmonaryResuscitationManager _cardiopulmonaryResuscitation;
+        [SerializeField] private DemoKeypad _mobile;
         
         public Observable<GameplayExitParams> Run(DIContainer gameplayContainer, GameplayEnterParams gameplayEnterParams)
         {
@@ -23,6 +26,9 @@ namespace VRFest.Scripts.Game.Gameplay
             var service = new FirstAidService(_firstAidView, gameplayEnterParams,
                 _gameplayContainer.Resolve<Coroutines>());
             _exitSceneEvent = new Subject<Unit>();
+            _cardiopulmonaryResuscitation.Init(service);
+            _mobile.Init(service);
+            
             BindGoToMenuEvent(_exitSceneEvent);
             
             var mainMenuEnterParams = new MainMenuEnterParams();

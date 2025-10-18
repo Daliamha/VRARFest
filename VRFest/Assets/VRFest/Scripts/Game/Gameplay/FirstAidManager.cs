@@ -11,14 +11,20 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private List<AudioClip> _hintsSounds;
         [SerializeField] private List<Outline> _hintsObjects;
+        [SerializeField] private List<Manager> _managers;
         [SerializeField] private TextMeshProUGUI _time;
         [SerializeField] private Animator _humanAnimator;
 
         private void Start()
         {
+            _time.gameObject.SetActive(false);
             foreach (var outline in _hintsObjects)
             {
                 outline.enabled = false;
+            }
+            foreach (var manager in _managers)
+            {
+                manager.gameObject.SetActive(false);
             }
         }
 
@@ -33,6 +39,11 @@ namespace VRFest.Scripts.Game.Gameplay
             Debug.Log("Worked sound");
         }
 
+        public void EnableManager(int index)
+        {
+            _managers[index].gameObject.SetActive(true);
+        }
+        
         public void EnableOutlineHint(int index)
         {
             _hintsObjects[index].enabled = true;
@@ -42,6 +53,7 @@ namespace VRFest.Scripts.Game.Gameplay
         public IEnumerator StartTime()
         {
             var time = 0f;
+            _time.gameObject.SetActive(true);
             while (true)
             {
                 _time.text = TimeSpan.FromSeconds(time++).ToString(@"hh\:mm\:ss");

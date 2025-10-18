@@ -24,36 +24,36 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             _isNext = true;
         }
-        
+
         private IEnumerator StartFirstAid()
         {
-            while (true)
-            {
+            /*while (true)
+            {*/
                 if (_gameplayEnterParams.isEducation)
                 {
-                    _firstAidView.PlayHintSound(index);
-                    _firstAidView.EnableOutlineHint(index++);
+                    _coroutines.StartCoroutine(_firstAidView.StartTime());
+                }
+
+                _firstAidView.PlayHintSound(index);
+                _firstAidView.EnableOutlineHint(index);
+                yield return WaitUntilNextMove();
+
+                if (_gameplayEnterParams.nameOfBad == "Burn")
+                {
+                    index = 1;
                     yield return WaitUntilNextMove();
-                
-                    if (_gameplayEnterParams.nameOfBad == "Burn")
-                    {
-                        yield return new WaitUntil(() => _isNext);
-                    }
-                    else if (_gameplayEnterParams.nameOfBad == "Hypothermia")
-                    {
-                    
-                    }
-                    else
-                    {
-                    
-                    }
+                }
+                else if (_gameplayEnterParams.nameOfBad == "Hypothermia")
+                {
+                    index = 4;
+                    yield return WaitUntilNextMove();
                 }
                 else
                 {
-                    _coroutines.StartCoroutine(_firstAidView.StartTime());
-                    break;
+                    index = 7;
+                    yield return WaitUntilNextMove();
                 }
-            }
+            //}
         }
 
         private IEnumerator WaitUntilNextMove()

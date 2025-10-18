@@ -2,13 +2,12 @@
 using HurricaneVR.Framework.Components;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
+using VRFest.Scripts.Game.Gameplay;
 
 namespace HurricaneVR.TechDemo.Scripts
 {
-    public class DemoKeypad : MonoBehaviour
+    public class DemoKeypad : Manager
     {
-        public UnityEvent Unlocked = new UnityEvent();
 
         public List<string> Codes;
         public TextMeshPro Display;
@@ -21,6 +20,12 @@ namespace HurricaneVR.TechDemo.Scripts
 
         private bool _unlocked;
 
+        private FirstAidService _service;
+        public void Init(FirstAidService service)
+        {
+            _service = service;
+        }
+        
         protected virtual void Start()
         {
             var buttons = GetComponentsInChildren<DemoKeypadButton>();
@@ -113,7 +118,7 @@ namespace HurricaneVR.TechDemo.Scripts
         protected virtual void Unlock()
         {
             if (!_unlocked)
-                Unlocked.Invoke();
+                _service.NextMoveFirstAid();
             _unlocked = true;
             Debug.Log($"Correct!");
             Destroy(this);

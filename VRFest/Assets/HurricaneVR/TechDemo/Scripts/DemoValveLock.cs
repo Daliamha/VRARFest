@@ -17,11 +17,7 @@ namespace HurricaneVR.TechDemo.Scripts
             Socket = GetComponent<DemoPassthroughSocket>();
             Socket.Grabbed.AddListener(OnValveGrabbed);
         }
-
-        public void Update()
-        {
-      
-        }
+        
 
         private void OnValveGrabbed(HVRGrabberBase grabber, HVRGrabbable key)
         {
