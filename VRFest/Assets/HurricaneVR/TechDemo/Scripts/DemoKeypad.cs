@@ -117,9 +117,7 @@ namespace HurricaneVR.TechDemo.Scripts
 
         protected virtual void Unlock()
         {
-            if (!_unlocked)
-                _service.NextMoveFirstAid();
-            _unlocked = true;
+            _service.NextMoveFirstAid();
             Debug.Log($"Correct!");
             Destroy(this);
         }

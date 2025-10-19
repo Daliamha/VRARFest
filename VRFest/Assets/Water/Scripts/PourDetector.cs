@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using VRFest.Scripts.Game.Gameplay;
 
 public class PourDetector : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class PourDetector : MonoBehaviour
             {
                 EndPour();
             }
+        }
+
+        if (currentStream != null && TryGetComponent(out ContactsSomeObjectsManager manager))
+        {
+            manager._otherCollider = currentStream.GetParticklesCollider();
         }
     }
 

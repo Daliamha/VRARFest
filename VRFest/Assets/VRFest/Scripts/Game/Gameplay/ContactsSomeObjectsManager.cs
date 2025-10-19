@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace VRFest.Scripts.Game.Gameplay
 {
     public class ContactsSomeObjectsManager : Manager
     {
-        [SerializeField] private SphereCollider _mainCollider;
-        [SerializeField] private Collider _otherCollider;
+        public SphereCollider _mainCollider;
+        public Collider _otherCollider;
         [SerializeField] private int _time;
         private Coroutine _coroutine;
         private FirstAidService _service;
@@ -18,9 +20,16 @@ namespace VRFest.Scripts.Game.Gameplay
         
         public void Update()
         {
-            if (_coroutine == null && OverlapSphere(_mainCollider, _otherCollider))
+            if (_mainCollider != null && _otherCollider != null)
             {
-                _coroutine = StartCoroutine(TryDoResuscitation());
+                if (_coroutine == null && OverlapSphere(_mainCollider, _otherCollider))
+                {
+                    _coroutine = StartCoroutine(TryDoResuscitation());
+                }
+            }
+            else
+            {
+                Debug.Log("Null Reference Exception");
             }
         }
 
@@ -30,7 +39,7 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 yield return new WaitForSeconds(1f);
 
-                
+                Debug.Log(i + " seconds of " + _time);
                 if (!OverlapSphere(_mainCollider, _otherCollider))
                 {
                     _coroutine = null;

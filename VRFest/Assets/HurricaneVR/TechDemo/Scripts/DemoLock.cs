@@ -51,7 +51,7 @@ namespace HurricaneVR.TechDemo.Scripts
 
         private IEnumerator MoveKey(HVRGrabbable key)
         {
-            var start = key.transform.position;
+            /*var start = key.transform.position;
             var startRot = key.transform.rotation;
 
             var elapsed = 0f;
@@ -62,9 +62,10 @@ namespace HurricaneVR.TechDemo.Scripts
 
                 elapsed += Time.deltaTime;
                 yield return null;
-            }
+            }*/
 
-            if(SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(SFXKeyInserted, FaceGrabbable.transform.position);
+            if(SFXPlayer.Instance && SFXKeyInserted != null) SFXPlayer.Instance.PlaySFX(SFXKeyInserted, FaceGrabbable.transform.position);
+            yield return null;
             FaceGrabbable.gameObject.SetActive(true);
             Face.SetActive(false);
             Destroy(key.gameObject);

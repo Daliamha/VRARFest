@@ -42,7 +42,7 @@ namespace VRFest.Scripts.Game.Gameplay
                 _firstAidView.EnableManager(index);
                 yield return WaitUntilNextMove();
 
-                if (_gameplayEnterParams.nameOfBad == "Burn")
+                if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
                     index = 1;
                     for (int i = 0; i < 3; i++)
@@ -57,9 +57,9 @@ namespace VRFest.Scripts.Game.Gameplay
                     }
 
                 }
-                else if (_gameplayEnterParams.nameOfBad == "Hypothermia")
+                else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
                 {
-                    index = 4;
+                    index = 3;
                     for (int i = 0; i < 3; i++)
                     {
                         _firstAidView.EnableOutlineHint(index);
@@ -74,7 +74,7 @@ namespace VRFest.Scripts.Game.Gameplay
                 }
                 else
                 {
-                    index = 7;
+                    index = 6;
                     for (int i = 0; i < 3; i++)
                     {
                         _firstAidView.EnableOutlineHint(index);
@@ -86,6 +86,11 @@ namespace VRFest.Scripts.Game.Gameplay
 
                         yield return WaitUntilNextMove();
                     }
+                }
+                
+                if (_gameplayEnterParams.isEducation)
+                {
+                    _firstAidView.PlayHintSound(7);
                 }
             //}
         }

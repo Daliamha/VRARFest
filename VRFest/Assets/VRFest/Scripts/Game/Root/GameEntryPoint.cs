@@ -38,7 +38,7 @@ namespace VRFest.Scripts.Game.Root
             
                         if (sceneName == Scenes.GAMEPLAY)
                         {
-                            var gameplayEnterParams = new GameplayEnterParams("burn", false);
+                            var gameplayEnterParams = new GameplayEnterParams("Burn", false);
                             _coroutines.StartCoroutine(LoadAndStartGame(gameplayEnterParams));
                             return;
                         }

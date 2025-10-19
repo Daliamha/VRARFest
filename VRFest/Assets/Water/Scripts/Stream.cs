@@ -27,6 +27,11 @@ public class Stream : MonoBehaviour
         pourRoutine = StartCoroutine(BeginPour());
     }
 
+    public Collider GetParticklesCollider()
+    {
+        return _splashParticle.GetComponent<SphereCollider>();
+    }
+
     public void End()
     {
         StopCoroutine(pourRoutine);

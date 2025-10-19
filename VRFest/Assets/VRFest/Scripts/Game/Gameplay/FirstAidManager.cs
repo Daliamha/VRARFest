@@ -24,7 +24,7 @@ namespace VRFest.Scripts.Game.Gameplay
             }
             foreach (var manager in _managers)
             {
-                manager.gameObject.SetActive(false);
+                manager.enabled = false;
             }
         }
 
@@ -41,7 +41,7 @@ namespace VRFest.Scripts.Game.Gameplay
 
         public void EnableManager(int index)
         {
-            _managers[index].gameObject.SetActive(true);
+            _managers[index].enabled = true;
         }
         
         public void EnableOutlineHint(int index)
