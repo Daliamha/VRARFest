@@ -48,7 +48,7 @@ namespace VRFest.Scripts.Game.Gameplay
                     _firstAidView.StartBurn();
                     for (int i = 0; i < 2; i++)
                     {
-                        Debug.Log(index);
+                        Debug.Log("index " + index);
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
                         {
@@ -64,8 +64,9 @@ namespace VRFest.Scripts.Game.Gameplay
                 else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
                 {
                     index = 3;
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 2; i++)
                     {
+                        Debug.Log("index " + index);
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
                         {
@@ -79,10 +80,11 @@ namespace VRFest.Scripts.Game.Gameplay
                 }
                 else
                 {
-                    index = 6;
-                    for (int i = 0; i < 3; i++)
+                    index = 5;
+                    for (int i = 0; i < 2; i++)
                     {
-                    if (i == 1) { _firstAidView.ShowTryStandUpAnimation(); }
+                        Debug.Log("index " + index);
+                        if (i == 1) { _firstAidView.ShowTryStandUpAnimation(); }
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
                         {
@@ -97,6 +99,10 @@ namespace VRFest.Scripts.Game.Gameplay
                 if (_gameplayEnterParams.isEducation)
                 {
                     _firstAidView.PlayHintSound(7);
+                }
+                else
+                {
+                    _firstAidView.StopTimer();
                 }
             //}
         }

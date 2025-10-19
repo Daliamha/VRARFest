@@ -14,7 +14,6 @@ namespace VRFest.Scripts.Game.MainMenu
         {
             var exitSignalSubj = new Subject<GameplayEnterParams>();
 
-            Debug.Log(12313123123123);
             Bind(exitSignalSubj);
             return exitSignalSubj;
         }

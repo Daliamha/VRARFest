@@ -13,6 +13,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<Outline> _hintsObjects;
         [SerializeField] private List<Manager> _managers;
         [SerializeField] private TextMeshProUGUI _time;
+        [SerializeField] private TextMeshProUGUI _nice;
         [SerializeField] private Animator _humanAnimator;
         [SerializeField] private GameObject _burnGameObject;
 
@@ -57,15 +58,23 @@ namespace VRFest.Scripts.Game.Gameplay
             Debug.Log("Worked hint");
         }
 
+        private bool _isTime = false;
         public IEnumerator StartTime()
         {
             var time = 0f;
             _time.gameObject.SetActive(true);
-            while (true)
+            _isTime = true;
+            while (_isTime)
             {
                 _time.text = TimeSpan.FromSeconds(time++).ToString(@"hh\:mm\:ss");
                 yield return new WaitForSeconds(1f);
             }
+            _nice.gameObject.SetActive(true);
+        }
+
+        public void StopTimer()
+        {
+            _isTime = false;
         }
     }
 }

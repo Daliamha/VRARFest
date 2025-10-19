@@ -9,6 +9,7 @@ namespace HurricaneVR.TechDemo.Scripts
 {
     public class DemoKeypad : Manager
     {
+        public bool _test;
         public AudioClip audio;
         public List<string> Codes;
         public TextMeshPro Display;
