@@ -70,7 +70,7 @@ namespace VRFest.Scripts.Game.Gameplay
                         _firstAidView.EnableManager(index);
                         if (index == 4)
                         {
-                            _firstAidView.StartVBurn();
+                            //_firstAidView.StartVBurn();
                         }
                         
                         if (_gameplayEnterParams.isEducation)
