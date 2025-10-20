@@ -68,6 +68,11 @@ namespace VRFest.Scripts.Game.Gameplay
                     {
                         Debug.Log("index " + index);
                         _firstAidView.EnableManager(index);
+                        if (index == 4)
+                        {
+                            _firstAidView.StartVBurn();
+                        }
+                        
                         if (_gameplayEnterParams.isEducation)
                         {
                             _firstAidView.EnableOutlineHint(index);

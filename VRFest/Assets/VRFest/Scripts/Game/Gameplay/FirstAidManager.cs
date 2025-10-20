@@ -16,6 +16,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private TextMeshProUGUI _nice;
         [SerializeField] private Animator _humanAnimator;
         [SerializeField] private GameObject _burnGameObject;
+        [SerializeField] private GameObject _bwurnGameObject;
 
         private void Start()
         {
@@ -38,6 +39,11 @@ namespace VRFest.Scripts.Game.Gameplay
         public void StartBurn()
         {
             _burnGameObject.SetActive(true);
+        }
+        
+        public void StartVBurn()
+        {
+            _bwurnGameObject.SetActive(true);
         }
         
         public void PlayHintSound(int index)

@@ -6,6 +6,7 @@ namespace VRFest.Scripts.Game.Gameplay
     public class CardiopulmonaryResuscitationManager : Manager
     {
         [SerializeField] private SphereCollider _collider;
+        [SerializeField] private int _time;
         private Coroutine _coroutine;
         private FirstAidService _service;
 
@@ -35,7 +36,7 @@ namespace VRFest.Scripts.Game.Gameplay
         private IEnumerator TryDoResuscitation()
         {
             var allNice = false;
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < _time; i++)
             {
                 yield return new WaitForSeconds(1f);
                 Collider[] colliders = Physics.OverlapSphere(_collider.transform.position, _collider.radius);
