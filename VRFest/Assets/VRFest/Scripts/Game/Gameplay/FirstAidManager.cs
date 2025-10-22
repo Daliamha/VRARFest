@@ -22,10 +22,7 @@ namespace VRFest.Scripts.Game.Gameplay
         private void Start()
         {
             _time.gameObject.SetActive(false);
-            foreach (var outline in _hintsObjects)
-            {
-                outline.enabled = false;
-            }
+            DisableAllHints();
             foreach (var manager in _managers)
             {
                 manager.enabled = false;
@@ -49,6 +46,7 @@ namespace VRFest.Scripts.Game.Gameplay
         
         public void PlayHintSound(int index)
         {
+            _audioSource.Stop();
             _audioSource.PlayOneShot(_hintsSounds[index], 1);
             Debug.Log("Worked sound");
         }
@@ -67,6 +65,17 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             _hintsObjects[index].enabled = true;
             Debug.Log("Worked hint");
+        }
+
+        public void DisableAllHints()
+        {
+            foreach (var outline in _hintsObjects)
+            {
+                if (outline != null)
+                {
+                    outline.enabled = false;
+                }
+            }
         }
 
         private bool _isTime = false;

@@ -38,7 +38,7 @@ namespace VRFest.Scripts.Game.Root
             
                         if (sceneName == Scenes.GAMEPLAY)
                         {
-                            var gameplayEnterParams = new GameplayEnterParams("EducationButtonHypothermia", true);
+                            var gameplayEnterParams = new GameplayEnterParams("EducationButtonBurn", true);
                             _coroutines.StartCoroutine(LoadAndStartGame(gameplayEnterParams));
                             return;
                         }

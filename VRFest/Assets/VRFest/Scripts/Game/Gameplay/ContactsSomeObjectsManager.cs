@@ -10,6 +10,10 @@ namespace VRFest.Scripts.Game.Gameplay
         public SphereCollider _mainCollider;
         public Collider _otherCollider;
         [SerializeField] private int _time;
+        [Space] 
+        [SerializeField] private bool _destroyObject;
+        [SerializeField] private bool _destroyOtherObject;
+        
         private Coroutine _coroutine;
         private FirstAidService _service;
 
@@ -46,7 +50,21 @@ namespace VRFest.Scripts.Game.Gameplay
                     StopAllCoroutines();
                 }
             }
-            _service.NextMoveFirstAid();
+            if (_service == null) { Debug.Log("Service is null"); }
+            else
+            {
+                _service.NextMoveFirstAid();
+            }
+            
+
+            if (_destroyOtherObject)
+            {
+                Destroy(_otherCollider.gameObject);
+            }
+            if (_destroyObject)
+            {
+                Destroy(_mainCollider.gameObject);
+            }
             Debug.Log("All Nice");
             Destroy(this);
         }

@@ -41,6 +41,7 @@ namespace VRFest.Scripts.Game.Gameplay
                 
                 _firstAidView.EnableManager(index);
                 yield return WaitUntilNextMove();
+                _firstAidView.DisableAllHints();
 
                 if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
@@ -58,6 +59,7 @@ namespace VRFest.Scripts.Game.Gameplay
 
                         index += 1;
                         yield return WaitUntilNextMove();
+                        _firstAidView.DisableAllHints();
                     }
 
                 }
@@ -67,11 +69,8 @@ namespace VRFest.Scripts.Game.Gameplay
                     for (int i = 0; i < 2; i++)
                     {
                         Debug.Log("index " + index);
+                        if (i == 1) { _firstAidView.ShowTryStandUpAnimation(); }
                         _firstAidView.EnableManager(index);
-                        if (index == 4)
-                        {
-                            //_firstAidView.StartVBurn();
-                        }
                         
                         if (_gameplayEnterParams.isEducation)
                         {
@@ -81,6 +80,7 @@ namespace VRFest.Scripts.Game.Gameplay
 
                         index += 1;
                         yield return WaitUntilNextMove();
+                        _firstAidView.DisableAllHints();
                     }
                 }
                 else
@@ -98,7 +98,13 @@ namespace VRFest.Scripts.Game.Gameplay
                         }
                         index += 1;
                         yield return WaitUntilNextMove();
+                        _firstAidView.DisableAllHints();
                     }
+                }
+                
+                if (index == 5)
+                {
+                    _firstAidView.StartVBurn();
                 }
                 
                 if (_gameplayEnterParams.isEducation)
