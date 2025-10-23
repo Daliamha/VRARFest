@@ -33,7 +33,7 @@ namespace VRFest.Scripts.Game.Root
         
         private void StartGame()
         {
-            #if UNITY_EDITOR
+            /*#if UNITY_EDITOR
                         var sceneName = SceneManager.GetActiveScene().name;
             
                         if (sceneName == Scenes.GAMEPLAY)
@@ -42,7 +42,7 @@ namespace VRFest.Scripts.Game.Root
                             _coroutines.StartCoroutine(LoadAndStartGame(gameplayEnterParams));
                             return;
                         }
-            #endif
+            #endif*/
             
             _coroutines.StartCoroutine(LoadAndStartMainMenu());
         }
