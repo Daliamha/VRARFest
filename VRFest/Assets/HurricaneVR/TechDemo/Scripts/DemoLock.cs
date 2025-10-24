@@ -4,6 +4,7 @@ using HurricaneVR.Framework.Core.Grabbers;
 using HurricaneVR.Framework.Core.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using VRFest.Scripts.Game.Gameplay;
 
 namespace HurricaneVR.TechDemo.Scripts
 {
@@ -18,6 +19,8 @@ namespace HurricaneVR.TechDemo.Scripts
         public AudioClip SFXUnlocked;
         public AudioClip SFXKeyInserted;
         public float LockThreshold = 89f;
+        public FirstAidView a;
+        public FirstAidService b;
 
         public UnityEvent Unlocked = new UnityEvent();
 
@@ -27,6 +30,12 @@ namespace HurricaneVR.TechDemo.Scripts
         {
             Socket = GetComponent<DemoPassthroughSocket>();
             Socket.Grabbed.AddListener(OnKeyGrabbed);
+         
+        }
+
+        public void Init(FirstAidService ser)
+        {
+            b = ser;
         }
 
         /*public void Update()
@@ -65,6 +74,7 @@ namespace HurricaneVR.TechDemo.Scripts
             }*/
 
             if(SFXPlayer.Instance && SFXKeyInserted != null) SFXPlayer.Instance.PlaySFX(SFXKeyInserted, FaceGrabbable.transform.position);
+            b.NextMoveFirstAid();
             yield return null;
             FaceGrabbable.gameObject.SetActive(true);
             Face.SetActive(false);

@@ -90,7 +90,6 @@ namespace VRFest.Scripts.Game.Gameplay
                     {
                         Debug.Log("index " + index);
                         if (i == 0 && !_gameplayEnterParams.isEducation) { _firstAidView.EnableOutlineHint(index); _firstAidView.EnableOutlinee(index); }
-                        if (i == 1) { _firstAidView.ShowTryStandUpAnimation(); }
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
                         {
@@ -99,6 +98,7 @@ namespace VRFest.Scripts.Game.Gameplay
                         }
                         index += 1;
                         yield return WaitUntilNextMove();
+                        if (i == 1) { _firstAidView.ShowTryStandUpAnimation(); }
                         _firstAidView.DisableAllHints();
                     }
                 }

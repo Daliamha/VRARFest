@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using HurricaneVR.TechDemo.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private GameObject _burnGameObject;
         [SerializeField] private GameObject _bwurnGameObject;
         [SerializeField] private CapsuleCollider _humanCollider;
+      
 
         private void Start()
         {

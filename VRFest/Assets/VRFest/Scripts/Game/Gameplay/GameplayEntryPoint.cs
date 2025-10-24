@@ -7,6 +7,7 @@ using VRFest.Scripts.Game.MainMenu;
 using VRFest.Scripts.Game.Root;
 using VRFest.Scripts.Utils;
 using UnityEngine.UI;
+using HurricaneVR.TechDemo.Scripts;
 
 namespace VRFest.Scripts.Game.Gameplay
 {
@@ -18,7 +19,8 @@ namespace VRFest.Scripts.Game.Gameplay
         private Subject<Unit> _exitSceneEvent;
         [SerializeField] private FirstAidView _firstAidView;
         [SerializeField] private List<Manager> _managers;
-        
+        [SerializeField] private DemoLock _jopa;
+
         public Observable<GameplayExitParams> Run(DIContainer gameplayContainer, GameplayEnterParams gameplayEnterParams)
         {
             _gameplayContainer = gameplayContainer;
@@ -32,6 +34,7 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 manager.Init(service);
             }
+            _jopa.Init(service);
             
             BindGoToMenuEvent(_exitSceneEvent);
             

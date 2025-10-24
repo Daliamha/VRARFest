@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(DemoPassthroughSocket))]
-    public class DemoLock : MonoBehaviour
+    public class DemoLockA : MonoBehaviour
     {
         public DemoPassthroughSocket Socket;
         public HVRGrabbable FaceGrabbable;
