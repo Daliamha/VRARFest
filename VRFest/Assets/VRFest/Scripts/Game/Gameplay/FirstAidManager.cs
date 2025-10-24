@@ -38,7 +38,13 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             _burnGameObject.SetActive(true);
         }
-        
+
+        public void EnableOutlinee(int index)
+        {
+            _hintsObjects[index].OutlineWidth = 0;
+            Debug.Log("Worked hint");
+        }
+
         public void StartVBurn()
         {
             _bwurnGameObject.SetActive(true);

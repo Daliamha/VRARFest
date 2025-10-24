@@ -89,6 +89,7 @@ namespace VRFest.Scripts.Game.Gameplay
                     for (int i = 0; i < 2; i++)
                     {
                         Debug.Log("index " + index);
+                        if (i == 0 && !_gameplayEnterParams.isEducation) { _firstAidView.EnableOutlineHint(index); _firstAidView.EnableOutlinee(index); }
                         if (i == 1) { _firstAidView.ShowTryStandUpAnimation(); }
                         _firstAidView.EnableManager(index);
                         if (_gameplayEnterParams.isEducation)
