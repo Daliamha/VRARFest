@@ -15,9 +15,9 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private bool _destroyOtherObject;
         
         private Coroutine _coroutine;
-        private FirstAidService _service;
+        private StereoscopicVisionTestService _service;
 
-        public override void Init(FirstAidService service)
+        public override void Init(StereoscopicVisionTestService service)
         {
             _service = service;
         }
@@ -53,7 +53,7 @@ namespace VRFest.Scripts.Game.Gameplay
             if (_service == null) { Debug.Log("Service is null"); }
             else
             {
-                _service.NextMoveFirstAid();
+                OnCollison();
             }
             
 
@@ -65,7 +65,6 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 Destroy(_mainCollider.gameObject);
             }
-            Debug.Log("All Nice");
             Destroy(this);
         }
         
@@ -82,6 +81,11 @@ namespace VRFest.Scripts.Game.Gameplay
             }
 
             return false;
+        }
+
+        public virtual void OnCollison()
+        {
+
         }
     }
 }

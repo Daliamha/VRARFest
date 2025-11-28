@@ -7,7 +7,6 @@ using VRFest.Scripts.Game.MainMenu;
 using VRFest.Scripts.Game.Root;
 using VRFest.Scripts.Utils;
 using UnityEngine.UI;
-using HurricaneVR.TechDemo.Scripts;
 
 namespace VRFest.Scripts.Game.Gameplay
 {
@@ -17,24 +16,22 @@ namespace VRFest.Scripts.Game.Gameplay
         
         private DIContainer _gameplayContainer;
         private Subject<Unit> _exitSceneEvent;
-        [SerializeField] private FirstAidView _firstAidView;
         [SerializeField] private List<Manager> _managers;
-        [SerializeField] private DemoLock _jopa;
+        [SerializeField] private StereoscopicVisionTestView _stereoscopicVisionTestView;
 
         public Observable<GameplayExitParams> Run(DIContainer gameplayContainer, GameplayEnterParams gameplayEnterParams)
         {
             _gameplayContainer = gameplayContainer;
-            _gameplayContainer.RegisterFactory(_ => new FirstAidService(_firstAidView, gameplayEnterParams,
+            _gameplayContainer.RegisterFactory(_ => new StereoscopicVisionTestService(_stereoscopicVisionTestView, gameplayEnterParams,
                 _gameplayContainer.Resolve<Coroutines>())).AsSingle();
             
-            var service = _gameplayContainer.Resolve<FirstAidService>();
-            
-            _exitSceneEvent = new Subject<Unit>();
+            var service = _gameplayContainer.Resolve<StereoscopicVisionTestService>();
             foreach (var manager in _managers)
             {
                 manager.Init(service);
             }
-            _jopa.Init(service);
+            
+            _exitSceneEvent = new Subject<Unit>();
             
             BindGoToMenuEvent(_exitSceneEvent);
             

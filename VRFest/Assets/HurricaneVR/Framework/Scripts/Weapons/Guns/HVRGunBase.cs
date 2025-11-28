@@ -16,6 +16,10 @@ namespace HurricaneVR.Framework.Weapons.Guns
     public class HVRGunBase : HVRDamageProvider
     {
 
+        public LineRenderer lineRenderer;
+        public Transform firstPoint;
+        public Transform secondPoint;
+        
         public HVRGrabbable Grabbable { get; private set; }
 
         [Header("Settings")]
@@ -133,7 +137,7 @@ namespace HurricaneVR.Framework.Weapons.Guns
 
         public bool IsBulletChambered { get; set; }
 
-        public HVRAmmo Ammo { get; set; }
+        public HVRAmmo Ammo;
 
         public HVRGrabbable AmmoGrabbable { get; set; }
 
@@ -167,8 +171,8 @@ namespace HurricaneVR.Framework.Weapons.Guns
                 if (!RequiresAmmo)
                     return false;
 
-                if (!Ammo || Ammo.IsEmpty)
-                    return true;
+                //if (!Ammo || Ammo.IsEmpty)
+                //    return true;
 
                 return false;
             }
@@ -221,6 +225,8 @@ namespace HurricaneVR.Framework.Weapons.Guns
                 CockingHandle.ChamberRound.AddListener(OnCockingHandleChambered);
             }
 
+            TryChamberRound();
+            
             SetupPooledBullets();
 
             _animatableGunParts = GetComponentsInChildren<HVRGunPart>();
@@ -268,6 +274,17 @@ namespace HurricaneVR.Framework.Weapons.Guns
             UpdateTrackedBullets();
             UpdateTriggerAnimation();
             UpdateShooting();
+            
+            lineRenderer.SetPosition(0, firstPoint.position);
+            /*if (Physics.Raycast(firstPoint.position,
+                    secondPoint.position - firstPoint.position, out RaycastHit hit))
+            {
+                lineRenderer.SetPosition(1, hit.point);
+            }
+            else
+            {*/
+                lineRenderer.SetPosition(1, secondPoint.position);
+            //}
         }
 
         protected virtual void CheckTriggerHaptics()

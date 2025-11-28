@@ -19,8 +19,8 @@ namespace HurricaneVR.TechDemo.Scripts
         public AudioClip SFXUnlocked;
         public AudioClip SFXKeyInserted;
         public float LockThreshold = 89f;
-        public FirstAidView a;
-        public FirstAidService b;
+        public StereoscopicVisionTestView a;
+        public StereoscopicVisionTestService b;
 
         public UnityEvent Unlocked = new UnityEvent();
 
@@ -33,7 +33,7 @@ namespace HurricaneVR.TechDemo.Scripts
          
         }
 
-        public void Init(FirstAidService ser)
+        public void Init(StereoscopicVisionTestService ser)
         {
             b = ser;
         }
@@ -74,7 +74,6 @@ namespace HurricaneVR.TechDemo.Scripts
             }*/
 
             if(SFXPlayer.Instance && SFXKeyInserted != null) SFXPlayer.Instance.PlaySFX(SFXKeyInserted, FaceGrabbable.transform.position);
-            b.NextMoveFirstAid();
             yield return null;
             FaceGrabbable.gameObject.SetActive(true);
             Face.SetActive(false);

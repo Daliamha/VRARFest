@@ -22,8 +22,8 @@ namespace HurricaneVR.TechDemo.Scripts
 
         private bool _unlocked;
 
-        private FirstAidService _service;
-        public override void Init(FirstAidService service)
+        private StereoscopicVisionTestService _service;
+        public override void Init(StereoscopicVisionTestService service)
         {
             _service = service;
         }
