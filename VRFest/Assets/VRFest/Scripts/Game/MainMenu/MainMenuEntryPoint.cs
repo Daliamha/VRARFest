@@ -27,7 +27,7 @@ namespace VRFest.Scripts.Game.MainMenu
                 panel.SetActive(false);
             }
             
-            if (!PlayerPrefs.HasKey("State"))
+            if (!PlayerPrefs.HasKey("Name"))
             {
                 _registrationPanel.SetActive(true);
             }
@@ -37,9 +37,9 @@ namespace VRFest.Scripts.Game.MainMenu
             }
             _openMenu.onClick.AddListener(() =>
             {
-                _nameAndAgeText.text = PlayerPrefs.GetString("Name") + "   "
+                _nameAndAgeText.text = "Пол: " + PlayerPrefs.GetString("Name") + "     Возраст:"
                                                                      + PlayerPrefs.GetString("Age");
-                _genderText.text = PlayerPrefs.GetInt("Gender") == 0 ? "Мальчик" : "Девочка";
+                _genderText.text = PlayerPrefs.GetInt("Gender") == 0 ? "Пол: Девочка" : "Пол: Мальчик";
             });
             
             Bind(exitSignalSubj);

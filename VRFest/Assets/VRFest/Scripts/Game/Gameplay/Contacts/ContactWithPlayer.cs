@@ -4,7 +4,7 @@ namespace VRFest.Scripts.Game.Gameplay.Contacts
     {
         public override void OnCollison()
         {
-            _service.OnCollisionWithPlayer();
+            _service.FinishGame();
         }
     }
 }

@@ -43,7 +43,6 @@ namespace VRFest.Scripts.Game.Gameplay
 
         public void DisplayScores(int scores)
         {
-            print(scores);
             _scores.text = scores.ToString() + " баллов";
         }
             
@@ -63,8 +62,13 @@ namespace VRFest.Scripts.Game.Gameplay
             }
             _afterTime.gameObject.SetActive(true);
         }
+
+        public void StartTime()
+        {
+            StartCoroutine(StartWaitTime());
+        }
         
-        public IEnumerator StartTime()
+        public IEnumerator StartWaitTime()
         {
             var time = 0f;
             _time.gameObject.SetActive(true);

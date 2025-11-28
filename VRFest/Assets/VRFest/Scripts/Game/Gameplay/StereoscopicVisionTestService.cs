@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using R3;
 using VRFest.Scripts.Game.States;
 using VRFest.Scripts.Utils;
@@ -42,6 +43,34 @@ namespace VRFest.Scripts.Game.Gameplay
             
             if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
             {
+                _view.DisplayLocation(0);
+                
+                if (!PlayerPrefs.HasKey("LastDayPlayed1"))
+                {
+                    PlayerPrefs.SetInt("LastDayPlayed1", DateTime.Now.Day);
+                    PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed1").ToString(), 0);
+                    _currentBestScore = 0;
+                }
+                else if (!PlayerPrefs.HasKey("Record1"))
+                {
+                    _currentBestScore = PlayerPrefs.GetInt("Record1");
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("Record1", 0);
+                    _currentBestScore = 0;
+                }
+
+                _view.StartTime();
+                yield return new WaitWhile(() => !_isNext);
+                _view.StopTimer();
+
+                if (_currentResult.Value > _currentBestScore)
+                {
+                    PlayerPrefs.SetInt("Record1", _currentResult.Value);
+                }
+                PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed1").ToString(), _currentResult.Value);
+                _view.EnableExits();
             }
             else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
             {
@@ -76,24 +105,48 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 
             }
-            
-            
-            var best2 = PlayerPrefs.GetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString());
-            StateController.Save(new FamilyLinkState
+
+            var json = StateController.Load();
+            if (json != null)
             {
-                LastDayPlayed = DateTime.Now.Day,
+                var dict = json.Scores;
+                if (json.Scores.ContainsKey(DateTime.Now))
+                {
+                    dict[DateTime.Now] += _currentResult.Value;
+                }
+                else
+                {
+                    dict.Add(DateTime.Now, _currentResult.Value);
+                }
                 
-            });
+                StateController.Save(new FamilyLinkState
+                {
+                    LastDayPlayed = DateTime.Now.Day,
+                    Scores = dict,
+                    PlayToday = json.PlayToday + 1,
+                });
+            }
+            else
+            {
+                var dict = new Dictionary<DateTime, int>();
+                dict.Add(DateTime.Now, _currentResult.Value);
+                StateController.Save(new FamilyLinkState
+                {
+                    LastDayPlayed = DateTime.Now.Day,
+                    Scores = dict,
+                    PlayToday = 1,
+                });
+            }
         }
 
+        public void FinishGame()
+        {
+            _isNext = true;
+        }
+        
         public void AddScores(int score)
         {
             _currentResult.Value += score;
-        }
-
-        public void OnCollisionWithPlayer()
-        {
-            
         }
 
         private IEnumerator WaitUntilNextMove()
