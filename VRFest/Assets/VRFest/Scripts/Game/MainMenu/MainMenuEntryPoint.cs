@@ -37,7 +37,7 @@ namespace VRFest.Scripts.Game.MainMenu
             }
             _openMenu.onClick.AddListener(() =>
             {
-                _nameAndAgeText.text = "Пол: " + PlayerPrefs.GetString("Name") + "     Возраст:"
+                _nameAndAgeText.text = "Имя: " + PlayerPrefs.GetString("Name") + "     Возраст:"
                                                                      + PlayerPrefs.GetString("Age");
                 _genderText.text = PlayerPrefs.GetInt("Gender") == 0 ? "Пол: Девочка" : "Пол: Мальчик";
             });
