@@ -15,7 +15,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private bool _destroyOtherObject;
         
         private Coroutine _coroutine;
-        private StereoscopicVisionTestService _service;
+        protected StereoscopicVisionTestService _service;
 
         public override void Init(StereoscopicVisionTestService service)
         {
@@ -85,7 +85,7 @@ namespace VRFest.Scripts.Game.Gameplay
 
         public virtual void OnCollison()
         {
-
+            
         }
     }
 }

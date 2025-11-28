@@ -28,6 +28,8 @@ namespace HurricaneVR.Framework.Components
         {
             if (Destroyed) return;
 
+            AfterDestroy();
+            
             if (DestroyedVersion)
             {
                 var destroyed = Instantiate(DestroyedVersion, transform.position, transform.rotation);
@@ -70,6 +72,11 @@ namespace HurricaneVR.Framework.Components
 
             Destroyed = true;
             Destroy(gameObject);
+        }
+
+        public virtual void AfterDestroy()
+        {
+            
         }
     }
 }

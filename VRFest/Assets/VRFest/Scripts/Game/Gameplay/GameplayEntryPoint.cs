@@ -17,6 +17,7 @@ namespace VRFest.Scripts.Game.Gameplay
         private DIContainer _gameplayContainer;
         private Subject<Unit> _exitSceneEvent;
         [SerializeField] private List<Manager> _managers;
+        [SerializeField] private DestructibleTarget _destructibleTarget;
         [SerializeField] private StereoscopicVisionTestView _stereoscopicVisionTestView;
 
         public Observable<GameplayExitParams> Run(DIContainer gameplayContainer, GameplayEnterParams gameplayEnterParams)
@@ -30,6 +31,7 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 manager.Init(service);
             }
+            _destructibleTarget.Init(service);
             
             _exitSceneEvent = new Subject<Unit>();
             

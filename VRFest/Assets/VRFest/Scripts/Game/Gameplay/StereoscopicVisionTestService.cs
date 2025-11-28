@@ -23,6 +23,12 @@ namespace VRFest.Scripts.Game.Gameplay
             _gameplayEnterParams = gameplayEnterParams;
             _coroutine = coroutine;
             _view = view;
+
+            if (!PlayerPrefs.HasKey(PlayerPrefs.GetInt("LastDayPlayed2").ToString()))
+            {
+                PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), 0);
+            }
+            
             coroutine.StartCoroutine(StartFirstAid());
         }
 
@@ -44,22 +50,27 @@ namespace VRFest.Scripts.Game.Gameplay
                 if (!PlayerPrefs.HasKey("LastDayPlayed2"))
                 {
                     PlayerPrefs.SetInt("LastDayPlayed2", DateTime.Now.Day);
+                    PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), 0);
+                    _currentBestScore = 0;
                 }
-
-                if (PlayerPrefs.GetInt("LastDayPlayed2") == DateTime.Now.Day)
+                else if (!PlayerPrefs.HasKey("Record2"))
                 {
-                    _currentResult.Value = PlayerPrefs.GetInt("LastDayPlayed2");
+                    _currentBestScore = PlayerPrefs.GetInt("Record2");
                 }
                 else
                 {
-                    _currentResult.Value = 0;
+                    PlayerPrefs.SetInt("Record2", 0);
+                    _currentBestScore = 0;
                 }
-                yield return WaitTimer();
+                
+                yield return _view.StartTimer(60);
 
                 if (_currentResult.Value > _currentBestScore)
                 {
-                    PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), _currentBestScore);
+                    PlayerPrefs.SetInt("Record2", _currentResult.Value);
                 }
+                PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), _currentResult.Value);
+                _view.EnableExits();
             }
             else
             {
@@ -71,9 +82,7 @@ namespace VRFest.Scripts.Game.Gameplay
             StateController.Save(new FamilyLinkState
             {
                 LastDayPlayed = DateTime.Now.Day,
-                BestRecord1 = 0,
-                BestRecord2 = best2,
-                BestRecord3 = 0,
+                
             });
         }
 
@@ -85,11 +94,6 @@ namespace VRFest.Scripts.Game.Gameplay
         public void OnCollisionWithPlayer()
         {
             
-        }
-
-        public IEnumerator WaitTimer()
-        {
-            yield return _view.StartTimer(60);
         }
 
         private IEnumerator WaitUntilNextMove()

@@ -120,7 +120,6 @@ namespace HurricaneVR.TechDemo.Scripts
         protected virtual void Unlock()
         {
             SFXPlayer.Instance.PlaySFX(audio, transform.position);
-            _service.NextMoveFirstAid();
             Debug.Log($"Correct!");
             Destroy(this);
         }

@@ -17,8 +17,8 @@ namespace HurricaneVR.Framework.Weapons.Guns
     {
 
         public LineRenderer lineRenderer;
-        public Transform firstPoint;
         public Transform secondPoint;
+        public Transform point1;
         
         public HVRGrabbable Grabbable { get; private set; }
 
@@ -184,6 +184,7 @@ namespace HurricaneVR.Framework.Weapons.Guns
 
         protected virtual void Awake()
         {
+            
             Grabbable = GetComponent<HVRGrabbable>();
 
             Grabbable.HandReleased.AddListener(OnHandReleased);
@@ -275,15 +276,16 @@ namespace HurricaneVR.Framework.Weapons.Guns
             UpdateTriggerAnimation();
             UpdateShooting();
             
-            lineRenderer.SetPosition(0, firstPoint.position);
-            /*if (Physics.Raycast(firstPoint.position,
-                    secondPoint.position - firstPoint.position, out RaycastHit hit))
+            
+            //lineRenderer.SetPosition(0, point1.position);
+            /*if (Physics.Raycast(point1.position,
+                    secondPoint.position - point1.position, out RaycastHit hit))
             {
                 lineRenderer.SetPosition(1, hit.point);
-            }
-            else
+            }*/
+            /*else
             {*/
-                lineRenderer.SetPosition(1, secondPoint.position);
+                //lineRenderer.SetPosition(1, secondPoint.position);
             //}
         }
 
