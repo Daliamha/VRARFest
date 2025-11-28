@@ -19,16 +19,17 @@ namespace VRFest.Scripts.Game.Gameplay
         private bool _isNext;
         private StereoscopicVisionTestView _view { get; }
 
-        public StereoscopicVisionTestService(StereoscopicVisionTestView view, GameplayEnterParams gameplayEnterParams, Coroutines coroutine)
+        public StereoscopicVisionTestService(StereoscopicVisionTestView view, GameplayEnterParams gameplayEnterParams, 
+            Coroutines coroutine)
         {
             _gameplayEnterParams = gameplayEnterParams;
             _coroutine = coroutine;
             _view = view;
 
-            if (!PlayerPrefs.HasKey(PlayerPrefs.GetInt("LastDayPlayed2").ToString()))
+            /*if (!PlayerPrefs.HasKey(PlayerPrefs.GetInt("LastDayPlayed2").ToString()))
             {
                 PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), 0);
-            }
+            }*/
             
             coroutine.StartCoroutine(StartFirstAid());
         }
@@ -62,7 +63,12 @@ namespace VRFest.Scripts.Game.Gameplay
                 }
 
                 _view.StartTime();
-                yield return new WaitWhile(() => !_isNext);
+                yield return new WaitForSeconds(2f);
+                while (!_isNext)
+                {
+                    _view.SpawnRandomCar(5, this);
+                    yield return new WaitForSeconds(4);
+                }
                 _view.StopTimer();
 
                 if (_currentResult.Value > _currentBestScore)

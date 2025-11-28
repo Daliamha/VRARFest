@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace VRFest.Scripts.Game.Gameplay
@@ -7,7 +8,17 @@ namespace VRFest.Scripts.Game.Gameplay
     {
         [SerializeField] private Rigidbody _rigidBody;
         public int speed;
+
         
+        private async void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("DestroyCollider"))
+            {
+                await Task.Delay(2000);
+                Destroy(gameObject);
+            }
+        }
+
         private void FixedUpdate()
         {
             _rigidBody.AddForce(Vector3.forward * speed);

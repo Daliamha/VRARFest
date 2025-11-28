@@ -2574,6 +2574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2059383991}
   - component: {fileID: 2059383990}
+  - component: {fileID: 2059383992}
   m_Layer: 0
   m_Name: MainMenuEntryPoint
   m_TagString: Untagged
@@ -2600,6 +2601,7 @@ MonoBehaviour:
   _panels:
   - {fileID: 8816747497761328111}
   - {fileID: 4108145665577331108}
+  _uploader: {fileID: 2059383992}
 --- !u!4 &2059383991
 Transform:
   m_ObjectHideFlags: 0
@@ -2615,6 +2617,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2059383992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059383989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c13fd6b2c6d8f5c44ae6c7f0df3f68a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &18962150288261126
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2657,6 +2671,7 @@ MonoBehaviour:
   _panels:
   - {fileID: 8816747497761328111}
   - {fileID: 4108145665577331108}
+  _uploader: {fileID: 0}
 --- !u!222 &138874521878427072
 CanvasRenderer:
   m_ObjectHideFlags: 0

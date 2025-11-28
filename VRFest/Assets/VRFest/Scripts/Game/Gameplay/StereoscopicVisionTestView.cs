@@ -3,16 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using VRFest.Scripts.Game.Gameplay.Contacts;
+using Random = UnityEngine.Random;
 
 namespace VRFest.Scripts.Game.Gameplay
 {
     public class StereoscopicVisionTestView : MonoBehaviour
     {
+        [Header("General")]
         [SerializeField] private TextMeshProUGUI _time;
         [SerializeField] private TextMeshProUGUI _scores;
         [SerializeField] private TextMeshProUGUI _afterTime;
         [SerializeField] private List<GameObject> _exits = new();
         [SerializeField] private List<GameObject> _locations = new();
+        [Space] [Header("Mini-Games")]
+        [SerializeField] private List<GameObject> _carsPrefabs = new();
+        [SerializeField] private List<Transform> _carsSpawnPosition = new();
       
 
         private void Start()
@@ -28,6 +34,17 @@ namespace VRFest.Scripts.Game.Gameplay
             }
         }
 
+        public void SpawnRandomCar(int speed, StereoscopicVisionTestService service)
+        {
+            var transform = _carsSpawnPosition[Random.Range(0, _carsSpawnPosition.Count)];
+            var controller = Instantiate(_carsPrefabs[Random.Range(0, _carsPrefabs.Count)], 
+                transform.position, transform.rotation).GetComponent<CarController>();
+            controller.speed = speed;
+            var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
+            cont._mainCollider = Camera.main.gameObject.GetComponent<SphereCollider>();
+            cont.Init(service);
+        }
+        
         public void EnableExits()
         {
             foreach (var item in _exits)

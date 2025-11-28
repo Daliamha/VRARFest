@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BaCon;
+using System;
 using UnityEngine;
 using R3;
 using TMPro;
@@ -17,6 +18,29 @@ namespace VRFest.Scripts.Game.MainMenu
         [SerializeField] private TextMeshProUGUI _nameAndAgeText;
         [SerializeField] private TextMeshProUGUI _genderText;
         [SerializeField] private List<GameObject> _panels = new();
+
+        /*[SerializeField] private FlaskUploader _uploader;
+        void Start()
+        {
+            // Создаём тестовых игроков
+            var players = new List<Player>
+            {
+                new Player(
+                    name: "Артём",
+                    gender: "Мужской",
+                    age: 25,
+                    scores: new List<ScoreEntry>
+                    {
+                        new ScoreEntry("2025-11-30", 143),
+                        new ScoreEntry("2025-12-01", 95),
+                        new ScoreEntry(DateTime.Now.Year.ToString() + "-"
+                            + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day, 1445),
+                    }
+                ),
+            };
+
+            _uploader.SendPlayersToServer(players);
+        }*/
         
         public Observable<GameplayEnterParams> Run(DIContainer mainMenuContainer, MainMenuEnterParams enterParams)
         {
