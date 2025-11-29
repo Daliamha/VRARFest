@@ -12,6 +12,7 @@ namespace VRFest.Scripts.Game.Gameplay.MiniGames
         {
             _service = service;
             gameObject.GetComponent<ContactWithSetka>()._mainCollider = collider;
+            gameObject.GetComponent<ContactWithSetka>().Init(service);
         }
         
     }

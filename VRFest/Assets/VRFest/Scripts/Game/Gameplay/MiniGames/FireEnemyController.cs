@@ -13,8 +13,9 @@ namespace VRFest.Scripts.Game.Gameplay.MiniGames
         public Animator animator;
         private StereoscopicVisionTestService _service;
         
-        public void Init(StereoscopicVisionTestService service)
+        public void Init(StereoscopicVisionTestService service, int speed)
         {
+            this.speed += speed;
             _service = service;
         }
 

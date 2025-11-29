@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VRFest.Scripts.Game.Gameplay.Contacts;
@@ -19,6 +18,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private TextMeshProUGUI _scores;
         [SerializeField] private TextMeshProUGUI _afterTime;
         [SerializeField] private TextMeshProUGUI _educationText;
+        [SerializeField] private GameObject _educationPanel;
         [SerializeField] private List<GameObject> _exits = new();
         [SerializeField] private List<GameObject> _locations = new();
         [Space] [Header("Mini-Games")]
@@ -45,6 +45,7 @@ namespace VRFest.Scripts.Game.Gameplay
 
         private void Start()
         {
+            _time.gameObject.SetActive(false);
             foreach (var item in _exits)
             {
                 item.gameObject.SetActive(false);
@@ -55,23 +56,31 @@ namespace VRFest.Scripts.Game.Gameplay
                 item.gameObject.SetActive(false);
             }
             _educationText.gameObject.SetActive(false);
+            _educationPanel.SetActive(false);
         }
 
         public async void SetEducationTextForSeconds(string educationText, int seconds)
         {
             _educationText.gameObject.SetActive(true);
+            _educationPanel.SetActive(true);
             _educationText.text = educationText;
             await Task.Delay(seconds * 1000);
+            CloseEducation();
+        }
+
+        public void CloseEducation()
+        {
+            _educationPanel.SetActive(false);
             _educationText.gameObject.SetActive(false);
         }
         
-        public void SpawnFireEnemy(StereoscopicVisionTestService service)
+        public void SpawnFireEnemy(StereoscopicVisionTestService service, int speed)
         {
             var index = Random.Range(0, _enemiesSpawnPositions.Count);
             var cont = Instantiate(_enemiesPrefabs[Random.Range(0, _enemiesPrefabs.Count)], 
                 _enemiesSpawnPositions[index].position, _enemiesSpawnPositions[index].transform.rotation)
                 .GetComponent<FireEnemyController>();
-            cont.Init(service);
+            cont.Init(service, speed);
         }
 
         private List<GameObject> _spawnedButterflies = new();
@@ -130,28 +139,57 @@ namespace VRFest.Scripts.Game.Gameplay
             _spawnedTargets.Clear();
         }
         
-        public void SpawnRandomCar(int speed, StereoscopicVisionTestService service)
+        public void SpawnRandomCar(int speed, StereoscopicVisionTestService service, int amount)
         {
-            var position = _carsSpawnPositions[Random.Range(0, _carsSpawnPositions.Count)];
-            var controller = Instantiate(_carsPrefabs[Random.Range(0, _carsPrefabs.Count)], 
-                position.position, position.rotation).GetComponent<CarController>();
-            controller.Init(service);
-            controller.speed += speed;
-            var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
-            cont._mainCollider = Camera.main.gameObject.GetComponent<SphereCollider>();
-            cont.Init(service);
+            var indexes = new List<int>();
+            for (int i = 0; i < amount; i++)
+            {
+                var index = Random.Range(0, _magicItemsSpawnPositions.Count);
+                while (indexes.Contains(index))
+                {
+                    index = Random.Range(0, _magicItemsSpawnPositions.Count);
+                }
+                indexes.Add(index);
+            }
+
+            for (int i = 0; i < amount; i++)
+            {
+                var position = _carsSpawnPositions[Random.Range(0, _carsSpawnPositions.Count)];
+                var controller = Instantiate(_carsPrefabs[Random.Range(0, _carsPrefabs.Count)],
+                    position.position, position.rotation).GetComponent<CarController>();
+                controller.Init(service);
+                controller.speed += speed;
+                var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
+                cont._mainCollider = Camera.main.gameObject.GetComponent<SphereCollider>();
+                cont.Init(service);
+            }
         }
 
-        public void SpawnMagicItem(int speed, StereoscopicVisionTestService service)
+        public void SpawnMagicItem(int speed, StereoscopicVisionTestService service, int amount)
         {
-            var position = _magicItemsSpawnPositions[Random.Range(0, _magicItemsSpawnPositions.Count)];
-            var controller = Instantiate(_magicItems[Random.Range(0, _magicItems.Count)], 
-                position.position, position.rotation).GetComponent<CarController>();
-            controller.Init(service);
-            controller.speed += speed;
-            var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
-            cont._mainCollider = Camera.main.gameObject.GetComponent<SphereCollider>();
-            cont.Init(service);
+            var indexes = new List<int>();
+            for (int i = 0; i < amount; i++)
+            {
+                var index = Random.Range(0, _magicItemsSpawnPositions.Count);
+                while (indexes.Contains(index))
+                {
+                    index = Random.Range(0, _magicItemsSpawnPositions.Count);
+                }
+                indexes.Add(index);
+            }
+            
+            for (int i = 0; i < amount; i++)
+            {
+                var index = indexes[i];
+                var position = _magicItemsSpawnPositions[index];
+                var controller = Instantiate(_magicItems[Random.Range(0, _magicItems.Count)],
+                    position.position, position.rotation).GetComponent<CarController>();
+                controller.Init(service);
+                controller.speed += speed;
+                var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
+                cont._mainCollider = Camera.main.gameObject.GetComponent<SphereCollider>();
+                cont.Init(service);
+            }
         }
         
         public void EnableExits()

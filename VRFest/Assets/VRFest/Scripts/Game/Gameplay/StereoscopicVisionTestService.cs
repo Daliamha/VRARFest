@@ -67,14 +67,20 @@ namespace VRFest.Scripts.Game.Gameplay
                 if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
                     _view.DisplayLocation(0);
-                    _view.SetEducationTextForSeconds(EducationConstants.FIRST, 30);
+                    _view.SetEducationTextForSeconds(EducationConstants.FIRST, 15);
+                    yield return new WaitForSeconds(13f);
 
                     _view.StartTime();
-                    yield return new WaitForSeconds(2f);
+                    var hod = 0;
+                    var amount = 1;
                     while (!_isNext)
                     {
-                        _view.SpawnRandomCar(5, this);
+                        if (hod == 12) amount++;
+                        if (hod == 25) amount++;
+                        if (hod == 37) amount++;
+                        _view.SpawnRandomCar(5, this, amount);
                         yield return new WaitForSeconds(4);
+                        hod++;
                     }
 
                     _view.StopTimer();
@@ -91,7 +97,8 @@ namespace VRFest.Scripts.Game.Gameplay
                 else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
                 {
                     _view.DisplayLocation(1);
-                    _view.SetEducationTextForSeconds(EducationConstants.SECOND, 30);
+                    _view.SetEducationTextForSeconds(EducationConstants.SECOND, 15);
+                    yield return new WaitForSeconds(13f);
 
                     var time = 60f;
                     _view.StartCoroutine(_view.StartTimer((int)time));
@@ -123,14 +130,24 @@ namespace VRFest.Scripts.Game.Gameplay
                 else
                 {
                     _view.DisplayLocation(2);
-                    _view.SetEducationTextForSeconds(EducationConstants.THIRD, 30);
+                    _view.SetEducationTextForSeconds(EducationConstants.THIRD, 15);
+                    yield return new WaitForSeconds(13f);
 
                     _view.StartTime();
                     yield return new WaitForSeconds(2f);
+                    var minSpeed = 0;
+                    var maxSpeed = 0;
+                    var hod = 0;
                     while (!_isNext)
                     {
-                        _view.SpawnFireEnemy(this);
-                        yield return new WaitForSeconds(5f);
+                        if (hod == 3) maxSpeed++;
+                        if (hod == 12) maxSpeed++;
+                        if (hod == 25) maxSpeed++;
+                        if (hod == 37) maxSpeed++;
+                        
+                        _view.SpawnFireEnemy(this, RRa);
+                        yield return new WaitForSeconds(4f);
+                        hod++;
                     }
 
                     _view.StopTimer();
@@ -150,14 +167,21 @@ namespace VRFest.Scripts.Game.Gameplay
                 if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
                     _view.DisplayLocation(3);
-                    _view.SetEducationTextForSeconds(EducationConstants.FOURTH, 30);
+                    _view.SetEducationTextForSeconds(EducationConstants.FOURTH, 15);
+                    yield return new WaitForSeconds(13f);
 
                     _view.StartTime();
                     yield return new WaitForSeconds(2f);
+                    var hod = 0;
+                    var amount = 1;
                     while (!_isNext)
                     {
-                        _view.SpawnMagicItem(5, this);
+                        if (hod == 12) amount++;
+                        if (hod == 25) amount++;
+                        if (hod == 37) amount++;
+                        _view.SpawnMagicItem(5, this, amount);
                         yield return new WaitForSeconds(4);
+                        hod++;
                     }
 
                     _view.StopTimer();
@@ -174,8 +198,9 @@ namespace VRFest.Scripts.Game.Gameplay
                 else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
                 {
                     _view.DisplayLocation(4);
-                    _view.SetEducationTextForSeconds(EducationConstants.FIFTH, 30);
-
+                    _view.SetEducationTextForSeconds(EducationConstants.FIFTH, 15);
+                    yield return new WaitForSeconds(13f);
+                    
                     var time = 60f;
                     _view.StartCoroutine(_view.StartTimer((int)time));
                     while (time >= 0)
@@ -206,21 +231,27 @@ namespace VRFest.Scripts.Game.Gameplay
                 else
                 {
                     _view.DisplayLocation(5);
-                    _view.SetEducationTextForSeconds(EducationConstants.SIXTH, 30);
+                    _view.SetEducationTextForSeconds(EducationConstants.SIXTH, 15);
+                    yield return new WaitForSeconds(13f);
 
                     var time = 60f;
                     _view.StartCoroutine(_view.StartTimer((int)time));
                     while (time >= 0)
                     {
-                        var amount = 1;
-                        _currentResult.Subscribe(x => { amount--; });
+                        var amount = 2;
+                        _currentResult.Subscribe(x =>
+                        {
+                            amount--; 
+                        });
                         _view.SpawnButterfliesGroup(this);
+                        Debug.Log(amount);
 
                         while (time >= 0 && amount > 0)
                         {
                             time -= Time.deltaTime;
                             yield return null;
                         }
+                        yield return null;
                     }
 
                     _view.DestroyAllButterflies();

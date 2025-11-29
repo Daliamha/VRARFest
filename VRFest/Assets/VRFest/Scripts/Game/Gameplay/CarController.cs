@@ -18,7 +18,7 @@ namespace VRFest.Scripts.Game.Gameplay
         
         private async void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("DestroyCollider") ||  other.gameObject.name == "Main")
+            if (other.gameObject.CompareTag("DestroyCollider"))
             {
                 _service.AddScores(10);
                 //await Task.Delay(2000);
