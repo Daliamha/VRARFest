@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace VRFest.Scripts.Game.States
@@ -6,7 +7,7 @@ namespace VRFest.Scripts.Game.States
     {
         public static void Save(FamilyLinkState state)
         {
-            PlayerPrefs.SetString("State", JsonUtility.ToJson(state));
+            PlayerPrefs.SetString("State", JsonConvert.SerializeObject(state));
         }
 
         public static FamilyLinkState Load()
@@ -18,7 +19,7 @@ namespace VRFest.Scripts.Game.States
             }
             else
             {
-                return JsonUtility.FromJson<FamilyLinkState>(json);
+                return JsonConvert.DeserializeObject<FamilyLinkState>(json);
             }
         }
     }

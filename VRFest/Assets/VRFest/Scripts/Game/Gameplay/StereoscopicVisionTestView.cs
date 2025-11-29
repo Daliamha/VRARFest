@@ -39,7 +39,8 @@ namespace VRFest.Scripts.Game.Gameplay
             var transform = _carsSpawnPosition[Random.Range(0, _carsSpawnPosition.Count)];
             var controller = Instantiate(_carsPrefabs[Random.Range(0, _carsPrefabs.Count)], 
                 transform.position, transform.rotation).GetComponent<CarController>();
-            controller.speed = speed;
+            controller.Init(service);
+            controller.speed += speed;
             var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
             cont._mainCollider = Camera.main.gameObject.GetComponent<SphereCollider>();
             cont.Init(service);

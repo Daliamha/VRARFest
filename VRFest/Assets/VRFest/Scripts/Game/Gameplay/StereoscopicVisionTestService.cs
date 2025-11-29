@@ -138,8 +138,10 @@ namespace VRFest.Scripts.Game.Gameplay
                     Scores = dict,
                     PlayToday = 1,
                 });
+                Debug.Log(dict.Keys);
             }
-            
+
+            yield return new WaitForSeconds(2f);
             SaveOnServer();
         }
 
@@ -161,26 +163,27 @@ namespace VRFest.Scripts.Game.Gameplay
         
         private void SaveOnServer()
         {
-            var scores = new List<ScoreEntry>();
+            var score = new List<ScoreEntry>();
             var state = StateController.Load();
+            Debug.Log(state.Scores.Keys);
+            Debug.Log(state.Scores.Keys.Count);
             foreach (var key in  state.Scores.Keys)
             {
-                scores.Add(new ScoreEntry(key.Date.ToString("yyyy-MM-dd"), state.Scores[key]));
+                Debug.Log(key);
+                score.Add(new ScoreEntry(key.Date.ToString("yyyy-MM-dd"), state.Scores[key]));
             }
+            Debug.Log(score[0].date);
+            Debug.Log(score[0].score);
             var players = new List<Player>
             {
                 new Player(
                     name: PlayerPrefs.GetString("Name"),
-                    gender: PlayerPrefs.GetInt("Gender") == 0 ? "Девочка" : "Мальчик",
+                    gender: PlayerPrefs.GetInt("Gender") != 0 ? "Женский" : "Мужской",
                     age: int.Parse(PlayerPrefs.GetString("Age")),
-                    scores: scores
+                    scores: score
                 ),
             };
 
-            Debug.Log(players[0].name);
-            Debug.Log(players[0].gender);
-            Debug.Log(players[0].age);
-            Debug.Log(players[0].scores);
             _uploader.SendPlayersToServer(players);
         }
     }

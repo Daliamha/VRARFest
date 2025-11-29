@@ -26,7 +26,7 @@ namespace VRFest.Scripts.Game.MainMenu
                 {
                     new Player(
                         name: _username.text,
-                        gender: _pol.value == 0 ? "Девочка" : "Мальчик",
+                        gender: _pol.value != 0 ? "Женский" : "Мужской",
                         age: int.Parse(_age.text),
                         scores: new List<ScoreEntry>
                         {

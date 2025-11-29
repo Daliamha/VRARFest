@@ -53,7 +53,7 @@ namespace VRFest.Scripts.Game.MainMenu
             return exitSignalSubj;
         }
 
-        public void InitUI(MainMenuEnterParams enterParams)
+        private void InitUI(MainMenuEnterParams enterParams)
         {
             foreach (var panel in _panels)
             {
@@ -72,12 +72,15 @@ namespace VRFest.Scripts.Game.MainMenu
             {
                 _nameAndAgeText.text = "Имя: " + PlayerPrefs.GetString("Name") + "     Возраст:"
                                        + PlayerPrefs.GetString("Age");
-                _genderText.text = PlayerPrefs.GetInt("Gender") == 0 ? "Пол: Девочка" : "Пол: Мальчик";
+                _genderText.text = PlayerPrefs.GetInt("Gender") != 0 ? "Пол: Женский" : "Пол: Мужской";
             });
 
-            if (!enterParams.HaveBreak && int.Parse(PlayerPrefs.GetString("Age")) <= 12)
+            if (enterParams != null)
             {
-                _breakPanel.SetActive(false);
+                if (enterParams.HaveBreak && int.Parse(PlayerPrefs.GetString("Age")) <= 12)
+                {
+                    _breakPanel.SetActive(true);
+                }
             }
         }
         
