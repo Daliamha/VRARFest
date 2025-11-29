@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using R3;
 using VRFest.Scripts.Game.States;
 using VRFest.Scripts.Utils;
+using Random = UnityEngine.Random;
 
 namespace VRFest.Scripts.Game.Gameplay
 {
@@ -85,8 +86,25 @@ namespace VRFest.Scripts.Game.Gameplay
             else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
             {
                 _view.DisplayLocation(1);
-                
-                yield return _view.StartTimer(60);
+
+                var time = 60f;
+                _view.StartCoroutine(_view.StartTimer((int)time));
+                while (time >= 0)
+                {
+                    var amount = Random.Range(1, 3);
+                    var onOne = false;
+                    _currentResult.Subscribe(x =>
+                    {
+                        amount--;
+                    });
+                    _view.SpawnTargetsToFire(amount, onOne, this);
+
+                    while (time >= 0 && amount > 0)
+                    {
+                        time -= Time.deltaTime;
+                        yield return null;
+                    }
+                }
 
                 _currentBestScore = PlayerPrefs.GetInt("TodayBestResult2");
                 if (_currentResult.Value > _currentBestScore)
@@ -105,15 +123,15 @@ namespace VRFest.Scripts.Game.Gameplay
             if (json != null)
             {
                 var dict = json.Scores;
-                if (json.Scores.ContainsKey(DateTime.Now))
+                if (json.Scores.ContainsKey(DateTime.Now.ToString("yyyy-MM-dd")))
                 {
-                    dict[DateTime.Now] = PlayerPrefs.GetInt("TodayBestResult1") +
-                                         PlayerPrefs.GetInt("TodayBestResult2") +
-                                         PlayerPrefs.GetInt("TodayBestResult3");
+                    dict[DateTime.Now.ToString("yyyy-MM-dd")] = PlayerPrefs.GetInt("TodayBestResult1") +
+                                                                PlayerPrefs.GetInt("TodayBestResult2") +
+                                                                PlayerPrefs.GetInt("TodayBestResult3");
                 }
                 else
                 {
-                    dict.Add(DateTime.Now, _currentResult.Value);
+                    dict.Add(DateTime.Now.ToString("yyyy-MM-dd"), _currentResult.Value);
                 }
 
                 int playToday = 0;
@@ -130,8 +148,8 @@ namespace VRFest.Scripts.Game.Gameplay
             }
             else
             {
-                var dict = new Dictionary<DateTime, int>();
-                dict.Add(DateTime.Now, _currentResult.Value);
+                var dict = new Dictionary<string, int>();
+                dict.Add(DateTime.Now.ToString("yyyy-MM-dd"), _currentResult.Value);
                 StateController.Save(new FamilyLinkState
                 {
                     LastDayPlayed = DateTime.Now.Day,
@@ -165,15 +183,11 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             var score = new List<ScoreEntry>();
             var state = StateController.Load();
-            Debug.Log(state.Scores.Keys);
-            Debug.Log(state.Scores.Keys.Count);
             foreach (var key in  state.Scores.Keys)
             {
-                Debug.Log(key);
-                score.Add(new ScoreEntry(key.Date.ToString("yyyy-MM-dd"), state.Scores[key]));
+                Debug.Log(key + " " + state.Scores[key]);
+                score.Add(new ScoreEntry(key, state.Scores[key]));
             }
-            Debug.Log(score[0].date);
-            Debug.Log(score[0].score);
             var players = new List<Player>
             {
                 new Player(

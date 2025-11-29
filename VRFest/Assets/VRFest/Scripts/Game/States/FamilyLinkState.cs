@@ -8,6 +8,6 @@ namespace VRFest.Scripts.Game.States
     {
         public int LastDayPlayed;
         public int PlayToday;
-        public Dictionary<DateTime, int> Scores = new();
+        public Dictionary<string, int> Scores = new();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VRFest.Scripts.Game.Gameplay.Contacts;
 using Random = UnityEngine.Random;
 
@@ -18,7 +19,14 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<GameObject> _locations = new();
         [Space] [Header("Mini-Games")]
         [SerializeField] private List<GameObject> _carsPrefabs = new();
-        [SerializeField] private List<Transform> _carsSpawnPosition = new();
+        [FormerlySerializedAs("_carsSpawnPosition")] 
+        [SerializeField] private List<Transform> _carsSpawnPositions = new();
+        [Space]
+        [SerializeField] private GameObject _starTargetPrefab;
+        [SerializeField] private List<Transform> _starsSpawnPositions = new();
+        [Space]
+        [SerializeField] private List<GameObject> _enemiesPrefabs = new();
+        [SerializeField] private List<Transform> _spawnPositions = new();
       
 
         private void Start()
@@ -34,9 +42,34 @@ namespace VRFest.Scripts.Game.Gameplay
             }
         }
 
+        public void SpawnFireEnemy()
+        {
+            
+        }
+        
+        public void SpawnTargetsToFire(int amount, bool onOneDistance, StereoscopicVisionTestService service)
+        {
+            var index = 0;
+            if (onOneDistance)
+            {
+                index =  Random.Range(0, 5);
+            }
+            else
+            {
+                index =  Random.Range(0, _starsSpawnPositions.Count);
+            }
+
+            for (int i = 0; i < amount; i++)
+            {
+                var dest = Instantiate(_starTargetPrefab, _starsSpawnPositions[index].position + Vector3.up,
+                    _starTargetPrefab.transform.rotation).GetComponent<DestructibleTarget>();
+                dest.Init(service);
+            }
+        }
+        
         public void SpawnRandomCar(int speed, StereoscopicVisionTestService service)
         {
-            var transform = _carsSpawnPosition[Random.Range(0, _carsSpawnPosition.Count)];
+            var transform = _carsSpawnPositions[Random.Range(0, _carsSpawnPositions.Count)];
             var controller = Instantiate(_carsPrefabs[Random.Range(0, _carsPrefabs.Count)], 
                 transform.position, transform.rotation).GetComponent<CarController>();
             controller.Init(service);
