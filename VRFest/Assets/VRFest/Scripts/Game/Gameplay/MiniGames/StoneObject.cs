@@ -18,11 +18,5 @@ namespace VRFest.Scripts.Game.Gameplay.MiniGames
                 Destroy(gameObject);
             }
         }
-
-        private async void OnEnable()
-        {
-            await Task.Delay(2000);
-            collider.isTrigger = false;
-        }
     }
 }

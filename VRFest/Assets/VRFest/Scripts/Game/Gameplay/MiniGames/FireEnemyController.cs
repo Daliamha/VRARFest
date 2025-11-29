@@ -18,20 +18,25 @@ namespace VRFest.Scripts.Game.Gameplay.MiniGames
             _service = service;
         }
 
-        public async void Die()
+        private bool _isDead;
+        public async void Die(bool nice)
         {
             particles.Play();
+            _isDead = true;
+            animator.enabled = false;
             await Task.Delay(2000);
             visual.enabled = false;
-            animator.enabled = false;
-            _service.AddScores(10);
+            if (nice) _service.AddScores(10);
             await Task.Delay(5000);
             Destroy(gameObject);
         }
 
         private void FixedUpdate()
         {
-            rigibody.AddForce(transform.forward * speed);
+            if (!_isDead)
+            {
+                rigibody.AddForce(transform.right * speed);
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -39,7 +44,12 @@ namespace VRFest.Scripts.Game.Gameplay.MiniGames
             if (other.CompareTag("DestroyCollider"))
             {
                 _service.FinishGame();
-                Destroy(gameObject);
+                var enemies = FindObjectsByType<FireEnemyController>(FindObjectsSortMode.None);
+                foreach (var e in enemies)
+                {
+                    e.Die(false);
+                }
+                Die(false);
             }
         }
     }

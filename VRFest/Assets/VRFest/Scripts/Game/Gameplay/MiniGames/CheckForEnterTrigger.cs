@@ -26,7 +26,8 @@ namespace VRFest.Scripts.Game.Gameplay.MiniGames
             {
                 if (enemy.TryGetComponent(out FireEnemyController controller))
                 {
-                    controller.Die();
+                    controller.Die(true);
+                    _objectsInside.Remove(enemy.gameObject);
                 }
             }
         }

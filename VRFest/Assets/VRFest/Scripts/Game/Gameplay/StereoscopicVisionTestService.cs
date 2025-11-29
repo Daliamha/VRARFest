@@ -105,6 +105,7 @@ namespace VRFest.Scripts.Game.Gameplay
                         yield return null;
                     }
                 }
+                _view.DestroyAllTargets();
 
                 _currentBestScore = PlayerPrefs.GetInt("TodayBestResult2");
                 if (_currentResult.Value > _currentBestScore)

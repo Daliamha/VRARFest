@@ -52,7 +52,8 @@ namespace VRFest.Scripts.Game.Gameplay
                 .GetComponent<FireEnemyController>();
             cont.Init(service);
         }
-        
+
+        private List<GameObject> _spawnedTargets = new();
         public void SpawnTargetsToFire(int amount, bool onOneDistance, StereoscopicVisionTestService service)
         {
             var index = 0;
@@ -70,7 +71,20 @@ namespace VRFest.Scripts.Game.Gameplay
                 var dest = Instantiate(_starTargetPrefab, _starsSpawnPositions[index].position + Vector3.up,
                     _starTargetPrefab.transform.rotation).GetComponent<DestructibleTarget>();
                 dest.Init(service);
+                _spawnedTargets.Add(dest.gameObject);
             }
+        }
+
+        public void DestroyAllTargets()
+        {
+            foreach (var item in _spawnedTargets)
+            {
+                if (item != null)
+                {
+                    Destroy(item);
+                }
+            }
+            _spawnedTargets.Clear();
         }
         
         public void SpawnRandomCar(int speed, StereoscopicVisionTestService service)
