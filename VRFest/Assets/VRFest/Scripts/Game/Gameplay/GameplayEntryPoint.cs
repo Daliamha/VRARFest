@@ -19,12 +19,13 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<Manager> _managers;
         [SerializeField] private DestructibleTarget _destructibleTarget;
         [SerializeField] private StereoscopicVisionTestView _stereoscopicVisionTestView;
+        [SerializeField] private FlaskUploader _flaskUploader;
 
         public Observable<GameplayExitParams> Run(DIContainer gameplayContainer, GameplayEnterParams gameplayEnterParams)
         {
             _gameplayContainer = gameplayContainer;
             _gameplayContainer.RegisterFactory(_ => new StereoscopicVisionTestService(_stereoscopicVisionTestView, gameplayEnterParams,
-                _gameplayContainer.Resolve<Coroutines>())).AsSingle();
+                _gameplayContainer.Resolve<Coroutines>(), _flaskUploader)).AsSingle();
             
             var service = _gameplayContainer.Resolve<StereoscopicVisionTestService>();
             foreach (var manager in _managers)

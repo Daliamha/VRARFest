@@ -45,6 +45,7 @@ namespace VRFest.Scripts.Game.Root
             #endif*/
             
             _coroutines.StartCoroutine(LoadAndStartMainMenu());
+            _coroutines.StartCoroutine(HaveBreakTime(/*900*/15));
         }
 
         private IEnumerator LoadAndStartGame(GameplayEnterParams enterParams)
@@ -82,9 +83,15 @@ namespace VRFest.Scripts.Game.Root
             });
         }
 
+        private IEnumerator HaveBreakTime(int time)
+        {
+            yield return new WaitForSeconds(time);
+        }
+
         private IEnumerator LoadScene(string sceneName)
         {
             yield return SceneManager.LoadSceneAsync(sceneName);
+            _coroutines.StartCoroutine(LoadAndStartMainMenu(new MainMenuEnterParams(true)));
         }
     }
 }

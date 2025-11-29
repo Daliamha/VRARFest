@@ -18,18 +18,36 @@ namespace VRFest.Scripts.Game.Gameplay
         private readonly Coroutines _coroutine;
         private bool _isNext;
         private StereoscopicVisionTestView _view { get; }
-
+        private FlaskUploader _uploader;
+        
+        
         public StereoscopicVisionTestService(StereoscopicVisionTestView view, GameplayEnterParams gameplayEnterParams, 
-            Coroutines coroutine)
+            Coroutines coroutine, FlaskUploader uploader)
         {
+            _uploader = uploader;
             _gameplayEnterParams = gameplayEnterParams;
             _coroutine = coroutine;
             _view = view;
 
-            /*if (!PlayerPrefs.HasKey(PlayerPrefs.GetInt("LastDayPlayed2").ToString()))
+            if (StateController.Load() == null)
             {
-                PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), 0);
-            }*/
+                PlayerPrefs.SetInt("LastDayPlayed1", 0);
+                PlayerPrefs.SetInt("LastDayPlayed2", 0);
+                PlayerPrefs.SetInt("LastDayPlayed3", 0);
+                PlayerPrefs.SetInt("TodayBestResult1", 0);
+                PlayerPrefs.SetInt("TodayBestResult2", 0);
+                PlayerPrefs.SetInt("TodayBestResult3", 0);
+            }
+            else
+            {
+                var state = StateController.Load();
+                if (state.LastDayPlayed != DateTime.Now.Day)
+                {
+                    PlayerPrefs.SetInt("TodayBestResult1", 0);
+                    PlayerPrefs.SetInt("TodayBestResult2", 0);
+                    PlayerPrefs.SetInt("TodayBestResult3", 0);
+                }
+            }
             
             coroutine.StartCoroutine(StartFirstAid());
         }
@@ -46,22 +64,7 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 _view.DisplayLocation(0);
                 
-                if (!PlayerPrefs.HasKey("LastDayPlayed1"))
-                {
-                    PlayerPrefs.SetInt("LastDayPlayed1", DateTime.Now.Day);
-                    PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed1").ToString(), 0);
-                    _currentBestScore = 0;
-                }
-                else if (!PlayerPrefs.HasKey("Record1"))
-                {
-                    _currentBestScore = PlayerPrefs.GetInt("Record1");
-                }
-                else
-                {
-                    PlayerPrefs.SetInt("Record1", 0);
-                    _currentBestScore = 0;
-                }
-
+                
                 _view.StartTime();
                 yield return new WaitForSeconds(2f);
                 while (!_isNext)
@@ -71,40 +74,26 @@ namespace VRFest.Scripts.Game.Gameplay
                 }
                 _view.StopTimer();
 
+                _currentBestScore = PlayerPrefs.GetInt("TodayBestResult1");
                 if (_currentResult.Value > _currentBestScore)
                 {
-                    PlayerPrefs.SetInt("Record1", _currentResult.Value);
+                    PlayerPrefs.SetInt("TodayBestResult1", _currentResult.Value);
                 }
-                PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed1").ToString(), _currentResult.Value);
+                PlayerPrefs.SetInt("LastDayPlayed1", DateTime.Now.Day);
                 _view.EnableExits();
             }
             else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
             {
                 _view.DisplayLocation(1);
                 
-                if (!PlayerPrefs.HasKey("LastDayPlayed2"))
-                {
-                    PlayerPrefs.SetInt("LastDayPlayed2", DateTime.Now.Day);
-                    PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), 0);
-                    _currentBestScore = 0;
-                }
-                else if (!PlayerPrefs.HasKey("Record2"))
-                {
-                    _currentBestScore = PlayerPrefs.GetInt("Record2");
-                }
-                else
-                {
-                    PlayerPrefs.SetInt("Record2", 0);
-                    _currentBestScore = 0;
-                }
-                
                 yield return _view.StartTimer(60);
 
+                _currentBestScore = PlayerPrefs.GetInt("TodayBestResult2");
                 if (_currentResult.Value > _currentBestScore)
                 {
-                    PlayerPrefs.SetInt("Record2", _currentResult.Value);
+                    PlayerPrefs.SetInt("TodayBestResult2", _currentResult.Value);
                 }
-                PlayerPrefs.SetInt(PlayerPrefs.GetInt("LastDayPlayed2").ToString(), _currentResult.Value);
+                PlayerPrefs.SetInt("LastDayPlayed2", DateTime.Now.Day);
                 _view.EnableExits();
             }
             else
@@ -118,18 +107,25 @@ namespace VRFest.Scripts.Game.Gameplay
                 var dict = json.Scores;
                 if (json.Scores.ContainsKey(DateTime.Now))
                 {
-                    dict[DateTime.Now] += _currentResult.Value;
+                    dict[DateTime.Now] = PlayerPrefs.GetInt("TodayBestResult1") +
+                                         PlayerPrefs.GetInt("TodayBestResult2") +
+                                         PlayerPrefs.GetInt("TodayBestResult3");
                 }
                 else
                 {
                     dict.Add(DateTime.Now, _currentResult.Value);
                 }
+
+                int playToday = 0;
+                if (PlayerPrefs.GetInt("TodayBestResult1") > 0) playToday++;
+                if (PlayerPrefs.GetInt("TodayBestResult2") > 0) playToday++;
+                if (PlayerPrefs.GetInt("TodayBestResult3") > 0) playToday++;
                 
                 StateController.Save(new FamilyLinkState
                 {
                     LastDayPlayed = DateTime.Now.Day,
                     Scores = dict,
-                    PlayToday = json.PlayToday + 1,
+                    PlayToday = playToday,
                 });
             }
             else
@@ -143,6 +139,8 @@ namespace VRFest.Scripts.Game.Gameplay
                     PlayToday = 1,
                 });
             }
+            
+            SaveOnServer();
         }
 
         public void FinishGame()
@@ -159,6 +157,31 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             yield return new WaitUntil(() => _isNext);
             _isNext = false;
+        }
+        
+        private void SaveOnServer()
+        {
+            var scores = new List<ScoreEntry>();
+            var state = StateController.Load();
+            foreach (var key in  state.Scores.Keys)
+            {
+                scores.Add(new ScoreEntry(key.Date.ToString("yyyy-MM-dd"), state.Scores[key]));
+            }
+            var players = new List<Player>
+            {
+                new Player(
+                    name: PlayerPrefs.GetString("Name"),
+                    gender: PlayerPrefs.GetInt("Gender") == 0 ? "Девочка" : "Мальчик",
+                    age: int.Parse(PlayerPrefs.GetString("Age")),
+                    scores: scores
+                ),
+            };
+
+            Debug.Log(players[0].name);
+            Debug.Log(players[0].gender);
+            Debug.Log(players[0].age);
+            Debug.Log(players[0].scores);
+            _uploader.SendPlayersToServer(players);
         }
     }
 }

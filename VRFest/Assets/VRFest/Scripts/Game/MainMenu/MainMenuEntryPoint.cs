@@ -14,6 +14,7 @@ namespace VRFest.Scripts.Game.MainMenu
     {
         private Subject<GameplayEnterParams> _exitSceneSignalSubj;
         [SerializeField] private GameObject _registrationPanel;
+        [SerializeField] private GameObject _breakPanel;
         [SerializeField] private Button _openMenu;
         [SerializeField] private TextMeshProUGUI _nameAndAgeText;
         [SerializeField] private TextMeshProUGUI _genderText;
@@ -46,6 +47,14 @@ namespace VRFest.Scripts.Game.MainMenu
         {
             var exitSignalSubj = new Subject<GameplayEnterParams>();
 
+            InitUI(enterParams);
+            
+            Bind(exitSignalSubj);
+            return exitSignalSubj;
+        }
+
+        public void InitUI(MainMenuEnterParams enterParams)
+        {
             foreach (var panel in _panels)
             {
                 panel.SetActive(false);
@@ -62,12 +71,14 @@ namespace VRFest.Scripts.Game.MainMenu
             _openMenu.onClick.AddListener(() =>
             {
                 _nameAndAgeText.text = "Имя: " + PlayerPrefs.GetString("Name") + "     Возраст:"
-                                                                     + PlayerPrefs.GetString("Age");
+                                       + PlayerPrefs.GetString("Age");
                 _genderText.text = PlayerPrefs.GetInt("Gender") == 0 ? "Пол: Девочка" : "Пол: Мальчик";
             });
-            
-            Bind(exitSignalSubj);
-            return exitSignalSubj;
+
+            if (!enterParams.HaveBreak && int.Parse(PlayerPrefs.GetString("Age")) <= 12)
+            {
+                _breakPanel.SetActive(false);
+            }
         }
         
         public void HanleGoToGameplayButtonClicked(GameObject button)
