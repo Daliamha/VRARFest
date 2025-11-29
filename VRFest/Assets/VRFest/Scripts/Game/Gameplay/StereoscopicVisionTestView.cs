@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VRFest.Scripts.Game.Gameplay.Contacts;
+using VRFest.Scripts.Game.Gameplay.MiniGames;
 using Random = UnityEngine.Random;
 
 namespace VRFest.Scripts.Game.Gameplay
@@ -26,7 +27,8 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<Transform> _starsSpawnPositions = new();
         [Space]
         [SerializeField] private List<GameObject> _enemiesPrefabs = new();
-        [SerializeField] private List<Transform> _spawnPositions = new();
+        [FormerlySerializedAs("_spawnPositions")] [SerializeField] 
+        private List<Transform> _enemiesSpawnPositions = new();
       
 
         private void Start()
@@ -42,9 +44,13 @@ namespace VRFest.Scripts.Game.Gameplay
             }
         }
 
-        public void SpawnFireEnemy()
+        public void SpawnFireEnemy(StereoscopicVisionTestService service)
         {
-            
+            var index = Random.Range(0, _enemiesSpawnPositions.Count);
+            var cont = Instantiate(_enemiesPrefabs[Random.Range(0, _enemiesPrefabs.Count)], 
+                _enemiesSpawnPositions[index].position, _enemiesSpawnPositions[index].transform.rotation)
+                .GetComponent<FireEnemyController>();
+            cont.Init(service);
         }
         
         public void SpawnTargetsToFire(int amount, bool onOneDistance, StereoscopicVisionTestService service)

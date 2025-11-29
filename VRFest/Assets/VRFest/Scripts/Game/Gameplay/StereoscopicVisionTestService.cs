@@ -116,7 +116,25 @@ namespace VRFest.Scripts.Game.Gameplay
             }
             else
             {
+                _view.DisplayLocation(2);
                 
+                
+                _view.StartTime();
+                yield return new WaitForSeconds(2f);
+                while (!_isNext)
+                {
+                    _view.SpawnFireEnemy(this);
+                    yield return new WaitForSeconds(5f);
+                }
+                _view.StopTimer();
+
+                _currentBestScore = PlayerPrefs.GetInt("TodayBestResult3");
+                if (_currentResult.Value > _currentBestScore)
+                {
+                    PlayerPrefs.SetInt("TodayBestResult3", _currentResult.Value);
+                }
+                PlayerPrefs.SetInt("LastDayPlayed3", DateTime.Now.Day);
+                _view.EnableExits();
             }
 
             var json = StateController.Load();
