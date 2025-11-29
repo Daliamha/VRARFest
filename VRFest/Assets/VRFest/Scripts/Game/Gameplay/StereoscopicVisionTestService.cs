@@ -156,7 +156,7 @@ namespace VRFest.Scripts.Game.Gameplay
                     yield return new WaitForSeconds(2f);
                     while (!_isNext)
                     {
-                        _view.SpawnRandomCar(5, this);
+                        _view.SpawnMagicItem(5, this);
                         yield return new WaitForSeconds(4);
                     }
 
@@ -208,15 +208,22 @@ namespace VRFest.Scripts.Game.Gameplay
                     _view.DisplayLocation(5);
                     _view.SetEducationTextForSeconds(EducationConstants.SIXTH, 30);
 
-                    _view.StartTime();
-                    yield return new WaitForSeconds(2f);
-                    while (!_isNext)
+                    var time = 60f;
+                    _view.StartCoroutine(_view.StartTimer((int)time));
+                    while (time >= 0)
                     {
-                        _view.SpawnFireEnemy(this);
-                        yield return new WaitForSeconds(5f);
+                        var amount = 1;
+                        _currentResult.Subscribe(x => { amount--; });
+                        _view.SpawnButterfliesGroup(this);
+
+                        while (time >= 0 && amount > 0)
+                        {
+                            time -= Time.deltaTime;
+                            yield return null;
+                        }
                     }
 
-                    _view.StopTimer();
+                    _view.DestroyAllButterflies();
 
                     _currentBestScore = PlayerPrefs.GetInt("TodayBestResult3");
                     if (_currentResult.Value > _currentBestScore)

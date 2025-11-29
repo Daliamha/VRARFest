@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VRFest.Scripts.Game.Gameplay.Contacts;
@@ -34,6 +35,12 @@ namespace VRFest.Scripts.Game.Gameplay
         [Space]
         [SerializeField] private List<GameObject> _magicItems = new();
         [SerializeField] private List<Transform> _magicItemsSpawnPositions = new();
+        [Space] 
+        
+        [Space] 
+        [SerializeField] private ButterfliesGroup _butterfliesPrefab;
+        [SerializeField] private SphereCollider _netCollider;
+        [SerializeField] private List<Transform> _butterfliesSpawnPoints = new();
       
 
         private void Start()
@@ -67,6 +74,28 @@ namespace VRFest.Scripts.Game.Gameplay
             cont.Init(service);
         }
 
+        private List<GameObject> _spawnedButterflies = new();
+        public void SpawnButterfliesGroup(StereoscopicVisionTestService service)
+        {
+            var index = Random.Range(0, _butterfliesSpawnPoints.Count);
+            var group = Instantiate(_butterfliesPrefab, _butterfliesSpawnPoints[index].position, 
+                _butterfliesSpawnPoints[index].rotation).GetComponent<ButterfliesGroup>();
+            group.Init(service, _netCollider);
+            _spawnedButterflies.Add(group.gameObject);
+        }
+        public void DestroyAllButterflies()
+        {
+            foreach (var item in _spawnedButterflies)
+            {
+                if (item != null)
+                {
+                    Destroy(item);
+                }
+            }
+            _spawnedTargets.Clear();
+        }
+        
+        
         private List<GameObject> _spawnedTargets = new();
         public void SpawnTargetsToFire(int amount, bool onOneDistance, StereoscopicVisionTestService service)
         {
@@ -103,9 +132,9 @@ namespace VRFest.Scripts.Game.Gameplay
         
         public void SpawnRandomCar(int speed, StereoscopicVisionTestService service)
         {
-            var transform = _carsSpawnPositions[Random.Range(0, _carsSpawnPositions.Count)];
+            var position = _carsSpawnPositions[Random.Range(0, _carsSpawnPositions.Count)];
             var controller = Instantiate(_carsPrefabs[Random.Range(0, _carsPrefabs.Count)], 
-                transform.position, transform.rotation).GetComponent<CarController>();
+                position.position, position.rotation).GetComponent<CarController>();
             controller.Init(service);
             controller.speed += speed;
             var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
@@ -115,9 +144,9 @@ namespace VRFest.Scripts.Game.Gameplay
 
         public void SpawnMagicItem(int speed, StereoscopicVisionTestService service)
         {
-            var transform = _magicItemsSpawnPositions[Random.Range(0, _magicItemsSpawnPositions.Count)];
+            var position = _magicItemsSpawnPositions[Random.Range(0, _magicItemsSpawnPositions.Count)];
             var controller = Instantiate(_magicItems[Random.Range(0, _magicItems.Count)], 
-                transform.position, transform.rotation).GetComponent<CarController>();
+                position.position, position.rotation).GetComponent<CarController>();
             controller.Init(service);
             controller.speed += speed;
             var cont = controller.gameObject.GetComponent<ContactWithPlayer>();

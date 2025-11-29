@@ -692,8 +692,10 @@ GameObject:
   - component: {fileID: 2679818802436818474}
   - component: {fileID: 3830442889322317991}
   - component: {fileID: 5071859988500634297}
+  - component: {fileID: 3460746468199073023}
   - component: {fileID: 6015179586876305486}
   - component: {fileID: 3975963706076150946}
+  - component: {fileID: 2481371478773675896}
   m_Layer: 0
   m_Name: Pony
   m_TagString: Untagged
@@ -710,7 +712,7 @@ Transform:
   m_GameObject: {fileID: 6591437148245778473}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.8801136, y: 1.78, z: -12.15}
+  m_LocalPosition: {x: -4.8801136, y: 1.89, z: -12.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -755,6 +757,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 6015179586876305486}
   speed: 15
+--- !u!114 &3460746468199073023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6591437148245778473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef973beb7af4a64976b0a8905e10a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainCollider: {fileID: 0}
+  _otherCollider: {fileID: 3975963706076150946}
+  _time: 0
+  _destroyObject: 0
+  _destroyOtherObject: 1
 --- !u!54 &6015179586876305486
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -797,12 +816,33 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.38263845, z: 2.156084}
+  m_Center: {x: 0, y: -1.5788016, z: -0.32306004}
+--- !u!65 &2481371478773675896
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6591437148245778473}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.7640538, z: 2.881279}
-  m_Center: {x: 0, y: -0.26595545, z: 0.03953743}
+  m_Size: {x: 0.8379817, y: 2.1806078, z: 3.7467976}
+  m_Center: {x: -0.006407976, y: -0.1761272, z: 0.38761044}
 --- !u!1 &6822202407695343062
 GameObject:
   m_ObjectHideFlags: 0
