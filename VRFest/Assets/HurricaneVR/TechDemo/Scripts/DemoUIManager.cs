@@ -128,12 +128,12 @@ namespace HurricaneVR.TechDemo.Scripts
 
         private void UpdateForceGrabButton()
         {
-            ForceGrabText.text = Inputs.ForceGrabActivation.ToString();
+            ForceGrabText.text = "Захватить стяжок"; //Inputs.ForceGrabActivation.ToString();
         }
 
         private void UpdateSitStandButton()
         {
-            SitStandText.text = CameraRig.SitStanding.ToString();
+            SitStandText.text = "Сесть/Встать"; //CameraRig.SitStanding.ToString();
         }
 
         public void OnTurnRateChanged(float rate)
@@ -189,12 +189,12 @@ namespace HurricaneVR.TechDemo.Scripts
 
         private void UpdateLeftForceButton()
         {
-            LeftForceText.text = LeftForce.GrabStyle.ToString();
+            LeftForceText.text = "Захватить левую руку"; //LeftForce.GrabStyle.ToString();
         }
 
         private void UpdateRightForceButton()
         {
-            RightForceText.text = RightForce.GrabStyle.ToString();
+            RightForceText.text = "Захватить правую руку"; //RightForce.GrabStyle.ToString();
         }
 
         public void TogglePause()
@@ -203,14 +203,14 @@ namespace HurricaneVR.TechDemo.Scripts
             {
                 if (Paused)
                 {
-                    PauseText.text = "Pause";
+                    PauseText.text = "Пауза";
                     Time.timeScale = 1f;
                     LeftHand.transform.parent = leftparent;
                     RightHand.transform.parent = rightParent;
                 }
                 else
                 {
-                    PauseText.text = "Unpause";
+                    PauseText.text = "Продолжить";
                     Time.timeScale = .00000001f;
                     LeftHand.transform.parent = LeftHand.Target;
                     RightHand.transform.parent = RightHand.Target;

@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using R3;
+using VRFest.Scripts.Game.Constants;
 using VRFest.Scripts.Game.States;
 using VRFest.Scripts.Utils;
 using Random = UnityEngine.Random;
@@ -60,84 +61,174 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 _view.DisplayScores(x);
             });
-            
-            if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
+
+            if (PlayerPrefs.GetInt("Pol") == 0)
             {
-                _view.DisplayLocation(0);
-                
-                
-                _view.StartTime();
-                yield return new WaitForSeconds(2f);
-                while (!_isNext)
+                if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
-                    _view.SpawnRandomCar(5, this);
-                    yield return new WaitForSeconds(4);
-                }
-                _view.StopTimer();
+                    _view.DisplayLocation(0);
+                    _view.SetEducationTextForSeconds(EducationConstants.FIRST, 30);
 
-                _currentBestScore = PlayerPrefs.GetInt("TodayBestResult1");
-                if (_currentResult.Value > _currentBestScore)
-                {
-                    PlayerPrefs.SetInt("TodayBestResult1", _currentResult.Value);
-                }
-                PlayerPrefs.SetInt("LastDayPlayed1", DateTime.Now.Day);
-                _view.EnableExits();
-            }
-            else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
-            {
-                _view.DisplayLocation(1);
-
-                var time = 60f;
-                _view.StartCoroutine(_view.StartTimer((int)time));
-                while (time >= 0)
-                {
-                    var amount = Random.Range(1, 3);
-                    var onOne = false;
-                    _currentResult.Subscribe(x =>
+                    _view.StartTime();
+                    yield return new WaitForSeconds(2f);
+                    while (!_isNext)
                     {
-                        amount--;
-                    });
-                    _view.SpawnTargetsToFire(amount, onOne, this);
-
-                    while (time >= 0 && amount > 0)
-                    {
-                        time -= Time.deltaTime;
-                        yield return null;
+                        _view.SpawnRandomCar(5, this);
+                        yield return new WaitForSeconds(4);
                     }
-                }
-                _view.DestroyAllTargets();
 
-                _currentBestScore = PlayerPrefs.GetInt("TodayBestResult2");
-                if (_currentResult.Value > _currentBestScore)
-                {
-                    PlayerPrefs.SetInt("TodayBestResult2", _currentResult.Value);
+                    _view.StopTimer();
+
+                    _currentBestScore = PlayerPrefs.GetInt("TodayBestResult1");
+                    if (_currentResult.Value > _currentBestScore)
+                    {
+                        PlayerPrefs.SetInt("TodayBestResult1", _currentResult.Value);
+                    }
+
+                    PlayerPrefs.SetInt("LastDayPlayed1", DateTime.Now.Day);
+                    _view.EnableExits();
                 }
-                PlayerPrefs.SetInt("LastDayPlayed2", DateTime.Now.Day);
-                _view.EnableExits();
+                else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
+                {
+                    _view.DisplayLocation(1);
+                    _view.SetEducationTextForSeconds(EducationConstants.SECOND, 30);
+
+                    var time = 60f;
+                    _view.StartCoroutine(_view.StartTimer((int)time));
+                    while (time >= 0)
+                    {
+                        var amount = Random.Range(1, 3);
+                        var onOne = false;
+                        _currentResult.Subscribe(x => { amount--; });
+                        _view.SpawnTargetsToFire(amount, onOne, this);
+
+                        while (time >= 0 && amount > 0)
+                        {
+                            time -= Time.deltaTime;
+                            yield return null;
+                        }
+                    }
+
+                    _view.DestroyAllTargets();
+
+                    _currentBestScore = PlayerPrefs.GetInt("TodayBestResult2");
+                    if (_currentResult.Value > _currentBestScore)
+                    {
+                        PlayerPrefs.SetInt("TodayBestResult2", _currentResult.Value);
+                    }
+
+                    PlayerPrefs.SetInt("LastDayPlayed2", DateTime.Now.Day);
+                    _view.EnableExits();
+                }
+                else
+                {
+                    _view.DisplayLocation(2);
+                    _view.SetEducationTextForSeconds(EducationConstants.THIRD, 30);
+
+                    _view.StartTime();
+                    yield return new WaitForSeconds(2f);
+                    while (!_isNext)
+                    {
+                        _view.SpawnFireEnemy(this);
+                        yield return new WaitForSeconds(5f);
+                    }
+
+                    _view.StopTimer();
+
+                    _currentBestScore = PlayerPrefs.GetInt("TodayBestResult3");
+                    if (_currentResult.Value > _currentBestScore)
+                    {
+                        PlayerPrefs.SetInt("TodayBestResult3", _currentResult.Value);
+                    }
+
+                    PlayerPrefs.SetInt("LastDayPlayed3", DateTime.Now.Day);
+                    _view.EnableExits();
+                }
             }
             else
             {
-                _view.DisplayLocation(2);
-                
-                
-                _view.StartTime();
-                yield return new WaitForSeconds(2f);
-                while (!_isNext)
+                if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
-                    _view.SpawnFireEnemy(this);
-                    yield return new WaitForSeconds(5f);
-                }
-                _view.StopTimer();
+                    _view.DisplayLocation(3);
+                    _view.SetEducationTextForSeconds(EducationConstants.FOURTH, 30);
 
-                _currentBestScore = PlayerPrefs.GetInt("TodayBestResult3");
-                if (_currentResult.Value > _currentBestScore)
-                {
-                    PlayerPrefs.SetInt("TodayBestResult3", _currentResult.Value);
+                    _view.StartTime();
+                    yield return new WaitForSeconds(2f);
+                    while (!_isNext)
+                    {
+                        _view.SpawnRandomCar(5, this);
+                        yield return new WaitForSeconds(4);
+                    }
+
+                    _view.StopTimer();
+
+                    _currentBestScore = PlayerPrefs.GetInt("TodayBestResult1");
+                    if (_currentResult.Value > _currentBestScore)
+                    {
+                        PlayerPrefs.SetInt("TodayBestResult1", _currentResult.Value);
+                    }
+
+                    PlayerPrefs.SetInt("LastDayPlayed1", DateTime.Now.Day);
+                    _view.EnableExits();
                 }
-                PlayerPrefs.SetInt("LastDayPlayed3", DateTime.Now.Day);
-                _view.EnableExits();
+                else if (_gameplayEnterParams.nameOfBad.Contains("Hypothermia"))
+                {
+                    _view.DisplayLocation(4);
+                    _view.SetEducationTextForSeconds(EducationConstants.FIFTH, 30);
+
+                    var time = 60f;
+                    _view.StartCoroutine(_view.StartTimer((int)time));
+                    while (time >= 0)
+                    {
+                        var amount = Random.Range(1, 3);
+                        var onOne = false;
+                        _currentResult.Subscribe(x => { amount--; });
+                        _view.SpawnTargetsToFire(amount, onOne, this);
+
+                        while (time >= 0 && amount > 0)
+                        {
+                            time -= Time.deltaTime;
+                            yield return null;
+                        }
+                    }
+
+                    _view.DestroyAllTargets();
+
+                    _currentBestScore = PlayerPrefs.GetInt("TodayBestResult2");
+                    if (_currentResult.Value > _currentBestScore)
+                    {
+                        PlayerPrefs.SetInt("TodayBestResult2", _currentResult.Value);
+                    }
+
+                    PlayerPrefs.SetInt("LastDayPlayed2", DateTime.Now.Day);
+                    _view.EnableExits();
+                }
+                else
+                {
+                    _view.DisplayLocation(5);
+                    _view.SetEducationTextForSeconds(EducationConstants.SIXTH, 30);
+
+                    _view.StartTime();
+                    yield return new WaitForSeconds(2f);
+                    while (!_isNext)
+                    {
+                        _view.SpawnFireEnemy(this);
+                        yield return new WaitForSeconds(5f);
+                    }
+
+                    _view.StopTimer();
+
+                    _currentBestScore = PlayerPrefs.GetInt("TodayBestResult3");
+                    if (_currentResult.Value > _currentBestScore)
+                    {
+                        PlayerPrefs.SetInt("TodayBestResult3", _currentResult.Value);
+                    }
+
+                    PlayerPrefs.SetInt("LastDayPlayed3", DateTime.Now.Day);
+                    _view.EnableExits();
+                }
             }
-
+            
             var json = StateController.Load();
             if (json != null)
             {

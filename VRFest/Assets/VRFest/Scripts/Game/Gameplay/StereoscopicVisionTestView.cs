@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,6 +17,7 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private TextMeshProUGUI _time;
         [SerializeField] private TextMeshProUGUI _scores;
         [SerializeField] private TextMeshProUGUI _afterTime;
+        [SerializeField] private TextMeshProUGUI _educationText;
         [SerializeField] private List<GameObject> _exits = new();
         [SerializeField] private List<GameObject> _locations = new();
         [Space] [Header("Mini-Games")]
@@ -29,6 +31,9 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<GameObject> _enemiesPrefabs = new();
         [FormerlySerializedAs("_spawnPositions")] [SerializeField] 
         private List<Transform> _enemiesSpawnPositions = new();
+        [Space]
+        [SerializeField] private List<GameObject> _magicItems = new();
+        [SerializeField] private List<Transform> _magicItemsSpawnPositions = new();
       
 
         private void Start()
@@ -42,8 +47,17 @@ namespace VRFest.Scripts.Game.Gameplay
             {
                 item.gameObject.SetActive(false);
             }
+            _educationText.gameObject.SetActive(false);
         }
 
+        public async void SetEducationTextForSeconds(string educationText, int seconds)
+        {
+            _educationText.gameObject.SetActive(true);
+            _educationText.text = educationText;
+            await Task.Delay(seconds * 1000);
+            _educationText.gameObject.SetActive(false);
+        }
+        
         public void SpawnFireEnemy(StereoscopicVisionTestService service)
         {
             var index = Random.Range(0, _enemiesSpawnPositions.Count);
@@ -91,6 +105,18 @@ namespace VRFest.Scripts.Game.Gameplay
         {
             var transform = _carsSpawnPositions[Random.Range(0, _carsSpawnPositions.Count)];
             var controller = Instantiate(_carsPrefabs[Random.Range(0, _carsPrefabs.Count)], 
+                transform.position, transform.rotation).GetComponent<CarController>();
+            controller.Init(service);
+            controller.speed += speed;
+            var cont = controller.gameObject.GetComponent<ContactWithPlayer>();
+            cont._mainCollider = Camera.main.gameObject.GetComponent<SphereCollider>();
+            cont.Init(service);
+        }
+
+        public void SpawnMagicItem(int speed, StereoscopicVisionTestService service)
+        {
+            var transform = _magicItemsSpawnPositions[Random.Range(0, _magicItemsSpawnPositions.Count)];
+            var controller = Instantiate(_magicItems[Random.Range(0, _magicItems.Count)], 
                 transform.position, transform.rotation).GetComponent<CarController>();
             controller.Init(service);
             controller.speed += speed;
