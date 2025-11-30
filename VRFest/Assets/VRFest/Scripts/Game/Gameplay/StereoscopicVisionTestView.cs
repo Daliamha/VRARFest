@@ -108,19 +108,33 @@ namespace VRFest.Scripts.Game.Gameplay
         private List<GameObject> _spawnedTargets = new();
         public void SpawnTargetsToFire(int amount, bool onOneDistance, StereoscopicVisionTestService service)
         {
-            var index = 0;
-            if (onOneDistance)
-            {
-                index =  Random.Range(0, 5);
-            }
-            else
-            {
-                index =  Random.Range(0, _starsSpawnPositions.Count);
-            }
-
+            var indexes = new List<int>();
             for (int i = 0; i < amount; i++)
             {
-                var dest = Instantiate(_starTargetPrefab, _starsSpawnPositions[index].position + Vector3.up,
+                var index = 0;
+                if (onOneDistance)
+                {
+                    index = Random.Range(0, 4);
+                }
+                else
+                {
+                    index = Random.Range(0, _starsSpawnPositions.Count);
+                }
+
+                while (indexes.Contains(index))
+                {
+                    if (onOneDistance)
+                    {
+                        index = Random.Range(0, 4);
+                    }
+                    else
+                    {
+                        index = Random.Range(0, _starsSpawnPositions.Count);
+                    }
+                }
+                indexes.Add(index);
+
+                var dest = Instantiate(_starTargetPrefab, _starsSpawnPositions[index].position + Vector3.up * 1.1f,
                     _starTargetPrefab.transform.rotation).GetComponent<DestructibleTarget>();
                 dest.Init(service);
                 _spawnedTargets.Add(dest.gameObject);

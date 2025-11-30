@@ -100,12 +100,26 @@ namespace VRFest.Scripts.Game.Gameplay
                     _view.SetEducationTextForSeconds(EducationConstants.SECOND, 15);
                     yield return new WaitForSeconds(13f);
 
-                    var time = 60f;
+                    var time = 120f;
+                    var hod = 0;
                     _view.StartCoroutine(_view.StartTimer((int)time));
                     while (time >= 0)
                     {
-                        var amount = Random.Range(1, 3);
-                        var onOne = false;
+                        var amount = 0;
+                        var onOne = true;
+                        if (hod > 12)
+                        {
+                            amount = Random.Range(2, 5);
+                            onOne = false;
+                        }
+                        else
+                        {
+                            amount = Random.Range(2, 4);
+                        }
+
+                        Debug.Log(amount);
+                        Debug.Log(onOne);
+                        
                         _currentResult.Subscribe(x => { amount--; });
                         _view.SpawnTargetsToFire(amount, onOne, this);
 
@@ -114,6 +128,9 @@ namespace VRFest.Scripts.Game.Gameplay
                             time -= Time.deltaTime;
                             yield return null;
                         }
+
+                        yield return null;
+                        hod++;
                     }
 
                     _view.DestroyAllTargets();
@@ -145,7 +162,7 @@ namespace VRFest.Scripts.Game.Gameplay
                         if (hod == 25) maxSpeed++;
                         if (hod == 37) maxSpeed++;
                         
-                        _view.SpawnFireEnemy(this, RRa);
+                        _view.SpawnFireEnemy(this, Random.Range(minSpeed, maxSpeed + 1));
                         yield return new WaitForSeconds(4f);
                         hod++;
                     }
