@@ -218,7 +218,7 @@ namespace VRFest.Scripts.Game.Gameplay
                     _view.SetEducationTextForSeconds(EducationConstants.FIFTH, 15);
                     yield return new WaitForSeconds(13f);
                     
-                    var time = 60f;
+                    var time = 120f;
                     _view.StartCoroutine(_view.StartTimer((int)time));
                     while (time >= 0)
                     {
@@ -251,16 +251,28 @@ namespace VRFest.Scripts.Game.Gameplay
                     _view.SetEducationTextForSeconds(EducationConstants.SIXTH, 15);
                     yield return new WaitForSeconds(13f);
 
-                    var time = 60f;
+                    var time = 120f;
                     _view.StartCoroutine(_view.StartTimer((int)time));
+                    var hod = 0;
                     while (time >= 0)
                     {
-                        var amount = 2;
+                        var amount = 0;
+                        if (hod < 3) amount = 2;
+                        else if (hod < 7 ) amount = 3;
+                        else if (hod < 13) amount = 4;
+                        else if (hod < 20) amount = 5;
+                        else amount = 6;
+                        
                         _currentResult.Subscribe(x =>
                         {
                             amount--; 
                         });
-                        _view.SpawnButterfliesGroup(this);
+
+                        for (int i = 0; i < amount; i++)
+                        {
+                            _view.SpawnButterfliesGroup(this);
+                        }
+
                         Debug.Log(amount);
 
                         while (time >= 0 && amount > 0)
@@ -268,6 +280,8 @@ namespace VRFest.Scripts.Game.Gameplay
                             time -= Time.deltaTime;
                             yield return null;
                         }
+
+                        hod++;
                         yield return null;
                     }
 
