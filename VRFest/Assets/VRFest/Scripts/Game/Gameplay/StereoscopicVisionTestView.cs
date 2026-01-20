@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HurricaneVR.Framework.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -36,7 +37,9 @@ namespace VRFest.Scripts.Game.Gameplay
         [SerializeField] private List<GameObject> _magicItems = new();
         [SerializeField] private List<Transform> _magicItemsSpawnPositions = new();
         [Space] 
-        
+        [SerializeField] private List<HVRGrabbable> _grabbables = new();
+        [SerializeField] private List<Transform> _grabSpawnPosition = new();
+        [SerializeField] private ContactWithObjects _contacts;
         [Space] 
         [SerializeField] private ButterfliesGroup _butterfliesPrefab;
         [SerializeField] private SphereCollider _netCollider;
@@ -101,7 +104,46 @@ namespace VRFest.Scripts.Game.Gameplay
                     Destroy(item);
                 }
             }
-            _spawnedTargets.Clear();
+            _spawnedButterflies.Clear();
+        }
+
+        private List<HVRGrabbable> jopa = new();
+        public void SpawnGrab(StereoscopicVisionTestService service)
+        {
+            var indexes = new List<int>();
+            print("JOPAPA");
+            foreach (var grab in _grabbables)
+            {
+                print(grab);
+                var index = Random.Range(0, _starsSpawnPositions.Count);
+
+                while (indexes.Contains(index))
+                {
+                    index = Random.Range(0, _starsSpawnPositions.Count);
+                }
+
+                indexes.Add(index);
+
+
+                var dest = Instantiate(grab.gameObject, _grabSpawnPosition[index].position,
+                    grab.transform.rotation);
+                print(dest.name);
+                jopa.Add(dest.GetComponent<HVRGrabbable>());
+                print(dest.name);
+                _contacts._otherCollider.Add(dest.GetComponent<Collider>());
+            }
+        }
+
+        public void ResetGrab()
+        {
+            foreach (var a in jopa)
+            {
+                if (a != null)
+                {
+                    Destroy(a.gameObject);
+                }
+            }
+            jopa.Clear();
         }
         
         
@@ -235,7 +277,6 @@ namespace VRFest.Scripts.Game.Gameplay
             while (_time.text != "00:00:00")
             {
                 _time.text = TimeSpan.FromSeconds(time--).ToString(@"hh\:mm\:ss");
-                print(time + "sss");
                 yield return new WaitForSeconds(1f);
             }
             _afterTime.gameObject.SetActive(true);
@@ -246,7 +287,7 @@ namespace VRFest.Scripts.Game.Gameplay
             StartCoroutine(StartWaitTime());
         }
         
-        public IEnumerator StartWaitTime()
+        private IEnumerator StartWaitTime()
         {
             var time = 0f;
             _time.gameObject.SetActive(true);

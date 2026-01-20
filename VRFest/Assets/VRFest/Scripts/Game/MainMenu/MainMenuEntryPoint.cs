@@ -53,6 +53,23 @@ namespace VRFest.Scripts.Game.MainMenu
             return exitSignalSubj;
         }
 
+        public void ResetData()
+        {
+            PlayerPrefs.DeleteAll();
+            Application.Quit();
+        }
+        
+        public void SetPanel(int index)
+        {
+            foreach (var panel in _panels)
+            {
+                panel.SetActive(false);
+            }
+            _panels[index].SetActive(true);
+
+            PlayerPrefs.SetInt("PPol", index);
+        }
+        
         private void InitUI(MainMenuEnterParams enterParams)
         {
             foreach (var panel in _panels)

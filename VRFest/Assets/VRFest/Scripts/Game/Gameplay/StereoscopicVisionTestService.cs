@@ -12,15 +12,14 @@ namespace VRFest.Scripts.Game.Gameplay
 {
     public class StereoscopicVisionTestService
     {
-        public ReadOnlyReactiveProperty<int> CurrentResult => _currentResult;
-        private ReactiveProperty<int> _currentResult = new(0);
+        private readonly ReactiveProperty<int> _currentResult = new(0);
         private int _currentBestScore;
         
         private readonly GameplayEnterParams _gameplayEnterParams;
         private readonly Coroutines _coroutine;
         private bool _isNext;
         private StereoscopicVisionTestView _view { get; }
-        private FlaskUploader _uploader;
+        private readonly FlaskUploader _uploader;
         
         
         public StereoscopicVisionTestService(StereoscopicVisionTestView view, GameplayEnterParams gameplayEnterParams, 
@@ -56,13 +55,12 @@ namespace VRFest.Scripts.Game.Gameplay
 
         private IEnumerator StartFirstAid()
         {
-            var day = DateTime.Now.Day;
             _currentResult.Subscribe(x =>
             {
                 _view.DisplayScores(x);
             });
 
-            if (PlayerPrefs.GetInt("Pol") == 0)
+            if (PlayerPrefs.GetInt("PPol") == 0)
             {
                 if (_gameplayEnterParams.nameOfBad.Contains("Burn"))
                 {
@@ -120,7 +118,7 @@ namespace VRFest.Scripts.Game.Gameplay
                         Debug.Log(amount);
                         Debug.Log(onOne);
                         
-                        _currentResult.Subscribe(x => { amount--; });
+                        _currentResult.Subscribe(_ => { amount--; });
                         _view.SpawnTargetsToFire(amount, onOne, this);
 
                         while (time >= 0 && amount > 0)
@@ -219,22 +217,26 @@ namespace VRFest.Scripts.Game.Gameplay
                     yield return new WaitForSeconds(13f);
                     
                     var time = 120f;
+                    
                     _view.StartCoroutine(_view.StartTimer((int)time));
+                    
+                    _currentResult.Subscribe(x =>
+                    {
+                        if (x != 0)
+                        {
+                            Debug.Log(x);
+                            _view.ResetGrab();
+                            _view.SpawnGrab(this);
+                        }
+                    });
                     while (time >= 0)
                     {
-                        var amount = Random.Range(1, 3);
-                        var onOne = false;
-                        _currentResult.Subscribe(x => { amount--; });
-                        _view.SpawnTargetsToFire(amount, onOne, this);
-
-                        while (time >= 0 && amount > 0)
-                        {
-                            time -= Time.deltaTime;
-                            yield return null;
-                        }
+                        Debug.Log(time);
+                        time -= Time.deltaTime;
+                        yield return null;
                     }
 
-                    _view.DestroyAllTargets();
+                    _view.ResetGrab();
 
                     _currentBestScore = PlayerPrefs.GetInt("TodayBestResult2");
                     if (_currentResult.Value > _currentBestScore)
@@ -254,26 +256,25 @@ namespace VRFest.Scripts.Game.Gameplay
                     var time = 120f;
                     _view.StartCoroutine(_view.StartTimer((int)time));
                     var hod = 0;
+                    var amount = 0;
                     while (time >= 0)
                     {
-                        var amount = 0;
                         if (hod < 3) amount = 2;
                         else if (hod < 7 ) amount = 3;
                         else if (hod < 13) amount = 4;
                         else if (hod < 20) amount = 5;
                         else amount = 6;
                         
-                        _currentResult.Subscribe(x =>
+                        _currentResult.Subscribe(_ =>
                         {
                             amount--; 
+                            Debug.Log(amount);
                         });
 
                         for (int i = 0; i < amount; i++)
                         {
                             _view.SpawnButterfliesGroup(this);
                         }
-
-                        Debug.Log(amount);
 
                         while (time >= 0 && amount > 0)
                         {

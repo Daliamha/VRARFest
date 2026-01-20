@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 
 public class FlaskUploader : MonoBehaviour
 {
-    // URL вашего Flask-сервера
     private const string UPLOAD_URL = "http://127.0.0.1:5000/upload";
 
     /// <summary>
@@ -23,7 +22,7 @@ public class FlaskUploader : MonoBehaviour
         // Преобразуем List<Player> в массив — Unity так требует для JsonUtility
         Player[] playerArray = players.ToArray();
 
-        // Сериализуем в JSON
+        print(playerArray[0].gender);
         string json = JsonConvert.SerializeObject(playerArray);
         Debug.Log("Отправляется JSON: " + json);
 

@@ -21,6 +21,7 @@ namespace VRFest.Scripts.Game.MainMenu
                 PlayerPrefs.SetString("Name", _username.text);
                 PlayerPrefs.SetString("Age", _age.text);
                 PlayerPrefs.SetInt("Pol", _pol.value);
+                PlayerPrefs.SetInt("PPol", _pol.value);
                 _panels[_pol.value].SetActive(true);
                 var players = new List<Player>
                 {
@@ -34,7 +35,7 @@ namespace VRFest.Scripts.Game.MainMenu
                         }
                     ),
                 };
-
+                
                 _uploader.SendPlayersToServer(players);
                 gameObject.SetActive(false);
             }

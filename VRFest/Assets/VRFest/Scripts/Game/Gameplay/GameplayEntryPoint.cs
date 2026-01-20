@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using BaCon;
-using System.Collections.Generic;
 using UnityEngine;
 using R3;
 using VRFest.Scripts.Game.MainMenu;
